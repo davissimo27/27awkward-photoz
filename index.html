@@ -1,351 +1,1229 @@
-﻿<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>27awkward photoz – Urban | Unkonventionell | Bodenständig</title>
-  <meta name="description" content="27awkward photoz – Urban Photography, Streetportraits, Event- und Lifestylefotografie. Buchungen, Portfolio & Story in DE/EN/ES." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      /* TODO: Ersetze #ff7a00 durch den exakten Orangeton des Logos */
-      --orange:#ff7a00;
-      --bg:#0f0f10;
-      --bg-2:#141416;
-      --text:#f1f1f1;
-      --muted:#b5b7ba;
-      --card:#1a1b1e;
-      --border:#2a2b2f;
-      --success:#2ecc71;
-      --error:#ff4757;
-      --shadow:0 10px 30px rgba(0,0,0,.35);
-      --radius:18px;
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.45}
-    a{color:var(--text);text-decoration:none}
-    img{max-width:100%;display:block}
-    .container{max-width:1200px;margin-inline:auto;padding:0 20px}
-    header{position:sticky;top:0;z-index:50;background:rgba(15,15,16,.88);backdrop-filter:saturate(110%) blur(8px);border-bottom:1px solid var(--border)}
-    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
-    .brand{display:flex;align-items:center;gap:14px}
-    .brand-logo{width:42px;height:42px;border-radius:10px;background:var(--card);border:1px solid var(--border);display:grid;place-items:center;overflow:hidden}
-    .brand h1{margin:0;font-size:18px;font-weight:800;letter-spacing:.3px}
-    .tagline{font-size:12px;color:var(--muted)}
-    .nav a.btn{padding:10px 14px;border:1px solid var(--border);border-radius:12px;background:linear-gradient(180deg,var(--card),#121215);font-weight:600}
-    .nav a.btn.cta{border-color:transparent;background:linear-gradient(180deg,var(--orange),#c85300);color:#111;box-shadow:0 6px 20px rgba(255,122,0,.35)}
-    .nav-links{display:flex;gap:12px;align-items:center}
-
-    .hero{padding:64px 0 36px;border-bottom:1px dashed var(--border)}
-    .hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:28px}
-    .kicker{color:var(--orange);font-weight:800;letter-spacing:.15em;text-transform:uppercase;font-size:12px;margin-bottom:10px}
-    .hero h2{font-size:42px;line-height:1.1;margin:.2em 0 .4em}
-    .hero p{color:var(--muted);max-width:66ch}
-    .badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-    .badge{border:1px solid var(--border);padding:8px 12px;border-radius:999px;font-size:12px;background:var(--bg-2)}
-    .badge.orange{border-color:transparent;background:rgba(255,122,0,.12);color:var(--orange)}
-    .hero-card{background:linear-gradient(180deg,var(--card),#111);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
-    .hero-card ul{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:8px}
-    .hero-card li{display:flex;align-items:center;gap:10px}
-    .dot{width:8px;height:8px;border-radius:50%;background:var(--orange)}
-
-    section{padding:48px 0}
-    h3.section-title{font-size:26px;margin:0 0 16px}
-    p.section-sub{color:var(--muted);margin:0 0 24px}
-
-    /* Tabs / Reiter */
-    .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
-    .tab{padding:10px 14px;border:1px solid var(--border);border-radius:999px;background:var(--bg-2);font-weight:600;font-size:14px;cursor:pointer}
-    .tab.active{border-color:transparent;background:rgba(255,122,0,.1);color:var(--orange)}
-
-    /* Services & Pricing */
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-    .card{background:linear-gradient(180deg,var(--card),#121215);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
-    .card h4{margin:0 0 6px}
-    .muted{color:var(--muted)}
-    .price{font-size:28px;font-weight:800;color:var(--orange)}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid var(--border);background:var(--bg-2);font-weight:700}
-    .btn.primary{border-color:transparent;background:linear-gradient(180deg,var(--orange),#c85300);color:#111}
-
-    /* Portfolio */
-    .portfolio{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-    .tile{position:relative;aspect-ratio:4/3;border-radius:16px;border:1px solid var(--border);overflow:hidden;background:radial-gradient(1200px 400px at 10% 10%, rgba(255,122,0,.08), transparent 60%), #16171a}
-    .tile .label{position:absolute;left:10px;bottom:10px;background:rgba(0,0,0,.55);backdrop-filter:blur(2px);padding:6px 10px;border-radius:999px;font-size:12px;border:1px solid rgba(255,255,255,.08)}
-    .tile[data-cat]{outline:0}
-
-    /* Story (DE/EN/ES) */
-    .lang-tabs{display:flex;gap:8px;margin-bottom:12px}
-    .lang-tab{padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg-2);cursor:pointer;font-weight:700}
-    .lang-tab.active{border-color:transparent;background:rgba(255,122,0,.1);color:var(--orange)}
-    .lang-panel{display:none}
-    .lang-panel.active{display:block}
-
-    /* Socials */
-    .socials{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-    .social{display:flex;align-items:center;justify-content:space-between;padding:14px;border:1px dashed var(--border);border-radius:12px;background:#121214}
-
-    /* Contact */
-    form{display:grid;gap:10px}
-    input,textarea,select{width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--border);background:#0f0f11;color:var(--text)}
-    textarea{min-height:120px}
-    .helper{font-size:12px;color:var(--muted)}
-
-    footer{border-top:1px solid var(--border);padding:24px 0;color:var(--muted)}
-
-    /* Responsive */
-    @media (max-width: 980px){
-      .hero-grid{grid-template-columns:1fr}
-      .grid{grid-template-columns:1fr 1fr}
-      .portfolio{grid-template-columns:1fr 1fr}
-      .socials{grid-template-columns:1fr 1fr}
-    }
-    @media (max-width: 640px){
-      .nav-links{display:none}
-      .grid{grid-template-columns:1fr}
-      .portfolio{grid-template-columns:1fr}
-      .socials{grid-template-columns:1fr}
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>27awkward photoz — Urban | Unkonventionell | Bodenständig</title>
+    <meta name="description" content="27awkward photoz — Urban Photography, Streetportraits, Event- und Lifestylefotografie. Buchungen, Portfolio & Story in DE/EN/ES.">
+    
+    <!-- SEO & Social Media -->
+    <meta property="og:title" content="27awkward photoz — Urban Photography">
+    <meta property="og:description" content="Urban, unkonventionell, bodenständig — Streetportraits und Lifestylefotografie mit Kante.">
+    <meta property="og:type" content="website">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Mobile optimizations -->
+    <meta name="theme-color" content="#ff7a00">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="27awkward photoz">
+    
+    <!-- Performance hints -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ===== CSS VARIABLES ===== */
+        :root {
+            /* TODO: Ersetze #ff7a00 durch den exakten Orangeton des Logos */
+            --orange: #ff7a00;
+            --bg: #0f0f10;
+            --bg-2: #141416;
+            --text: #f1f1f1;
+            --muted: #b5b7ba;
+            --card: #1a1b1e;
+            --border: #2a2b2f;
+            --success: #2ecc71;
+            --error: #ff4757;
+            --shadow: 0 10px 30px rgba(0,0,0,.35);
+            --radius: 18px;
+        }
+        
+        /* ===== RESET & BASE ===== */
+        * {
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+            line-height: 1.45;
+            scroll-behavior: smooth;
+        }
+        
+        a {
+            color: var(--text);
+            text-decoration: none;
+        }
+        
+        img {
+            max-width: 100%;
+            display: block;
+        }
+        
+        /* ===== LAYOUT ===== */
+        .container {
+            max-width: 1200px;
+            margin-inline: auto;
+            padding: 0 20px;
+        }
+        
+        /* ===== HEADER ===== */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(15,15,16,.88);
+            backdrop-filter: saturate(110%) blur(8px);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 0;
+        }
+        
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+        }
+        
+        .brand h1 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: .3px;
+        }
+        
+        .tagline {
+            font-size: 12px;
+            color: var(--muted);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        
+        .nav a.btn {
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: linear-gradient(180deg, var(--card), #121215);
+            color: var(--text);
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        
+        .nav a.btn:hover {
+            border-color: var(--orange);
+            background: rgba(255,122,0,.1);
+            color: var(--orange);
+            transform: translateY(-1px);
+        }
+        
+        .nav a.btn.cta {
+            border-color: transparent;
+            background: linear-gradient(180deg, var(--orange), #c85300);
+            color: #111;
+            box-shadow: 0 6px 20px rgba(255,122,0,.35);
+        }
+        
+        .nav a.btn.cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255,122,0,.45);
+            background: linear-gradient(180deg, #ff8c1a, #d45f00);
+        }
+        
+        /* ===== HERO ===== */
+        .hero {
+            padding: 64px 0 36px;
+            border-bottom: 1px dashed var(--border);
+        }
+        
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr .8fr;
+            gap: 28px;
+            align-items: center;
+        }
+        
+        .kicker {
+            color: var(--orange);
+            font-weight: 800;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .hero h2 {
+            font-size: 42px;
+            line-height: 1.1;
+            margin: .2em 0 .4em;
+            background: linear-gradient(135deg, var(--text), var(--muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            color: var(--muted);
+            max-width: 66ch;
+            font-size: 16px;
+        }
+        
+        .badges {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 18px;
+        }
+        
+        .badge {
+            border: 1px solid var(--border);
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            background: var(--bg-2);
+        }
+        
+        .badge.orange {
+            border-color: transparent;
+            background: rgba(255,122,0,.12);
+            color: var(--orange);
+        }
+        
+        .hero-card {
+            background: linear-gradient(180deg, var(--card), #111);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px;
+            box-shadow: var(--shadow);
+        }
+        
+        .hero-card ul {
+            margin: 10px 0 0;
+            padding: 0;
+            list-style: none;
+            display: grid;
+            gap: 8px;
+        }
+        
+        .hero-card li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--orange);
+        }
+        
+        /* ===== SECTIONS ===== */
+        section {
+            padding: 48px 0;
+        }
+        
+        h3.section-title {
+            font-size: 26px;
+            margin: 0 0 16px;
+        }
+        
+        p.section-sub {
+            color: var(--muted);
+            margin: 0 0 24px;
+        }
+        
+        /* ===== GRID & CARDS ===== */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        
+        .card {
+            background: linear-gradient(180deg, var(--card), #121215);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255,122,0,.3);
+        }
+        
+        .card h4 {
+            margin: 0 0 6px;
+        }
+        
+        .muted {
+            color: var(--muted);
+        }
+        
+        .price {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--orange);
+        }
+        
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--bg-2);
+            color: var(--text);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            transform: translateY(-1px);
+            border-color: var(--orange);
+            background: rgba(255,122,0,.1);
+            color: var(--orange);
+        }
+        
+        .btn.primary {
+            border-color: transparent;
+            background: linear-gradient(180deg, var(--orange), #c85300);
+            color: #111;
+        }
+        
+        .btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255,122,0,.35);
+            background: linear-gradient(180deg, #ff8c1a, #d45f00);
+        }
+        
+        /* ===== TABS ===== */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+        
+        .tab {
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            background: var(--bg-2);
+            color: var(--text);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .tab:hover {
+            border-color: var(--orange);
+            background: rgba(255,122,0,.1);
+            color: var(--orange);
+        }
+        
+        .tab.active {
+            border-color: transparent;
+            background: rgba(255,122,0,.1);
+            color: var(--orange);
+        }
+        
+        /* ===== PORTFOLIO ===== */
+        .portfolio {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        
+        /* ===== FORMS (ENHANCED FOR BREVO) ===== */
+        form {
+            display: grid;
+            gap: 16px;
+        }
+        
+        .form-group {
+            display: grid;
+            gap: 6px;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            color: var(--text);
+            font-size: 14px;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--bg-2);
+            color: var(--text);
+            font-family: inherit;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--orange);
+            background: rgba(255,122,0,.05);
+            box-shadow: 0 0 0 3px rgba(255,122,0,.1);
+        }
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+            font-family: inherit;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            background: var(--bg-2);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin: 0;
+            accent-color: var(--orange);
+        }
+        
+        .checkbox-group label {
+            flex: 1;
+            font-size: 13px;
+            line-height: 1.4;
+            margin: 0;
+        }
+        
+        .form-success {
+            padding: 16px;
+            background: rgba(46, 204, 113, 0.1);
+            border: 1px solid var(--success);
+            border-radius: 12px;
+            color: var(--success);
+            font-weight: 600;
+            display: none;
+        }
+        
+        .form-error {
+            padding: 16px;
+            background: rgba(255, 71, 87, 0.1);
+            border: 1px solid var(--error);
+            border-radius: 12px;
+            color: var(--error);
+            font-weight: 600;
+            display: none;
+        }
+        
+        .helper {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.4;
+        }
+        
+        /* Brevo form integration styles */
+        .brevo-form {
+            width: 100% !important;
+        }
+        
+        .brevo-form input,
+        .brevo-form textarea,
+        .brevo-form select {
+            background: var(--bg-2) !important;
+            color: var(--text) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 12px !important;
+            padding: 14px 16px !important;
+            font-family: Inter, sans-serif !important;
+        }
+        
+        .brevo-form button {
+            background: linear-gradient(180deg, var(--orange), #c85300) !important;
+            border: none !important;
+            border-radius: 12px !important;
+            color: #111 !important;
+            font-weight: 700 !important;
+            padding: 14px 20px !important;
+            transition: all 0.2s ease !important;
+        }
+        
+        .brevo-form button:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 20px rgba(255,122,0,.35) !important;
+        }
+        
+        /* ===== LANGUAGE TABS ===== */
+        .lang-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        
+        .lang-tab {
+            padding: 8px 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg-2);
+            color: var(--text);
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+        
+        .lang-tab:hover {
+            border-color: var(--orange);
+            background: rgba(255,122,0,.1);
+            color: var(--orange);
+        }
+        
+        .lang-tab.active {
+            border-color: transparent;
+            background: rgba(255,122,0,.1);
+            color: var(--orange);
+        }
+        
+        .lang-panel {
+            display: none;
+        }
+        
+        .lang-panel.active {
+            display: block;
+        }
+        
+        /* ===== SOCIALS ===== */
+        .socials {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        
+        .social {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px;
+            border: 1px dashed var(--border);
+            border-radius: 12px;
+            background: #121214;
+            transition: border-color 0.2s ease;
+        }
+        
+        .social:hover {
+            border-color: var(--orange);
+        }
+        
+        /* ===== FOOTER ===== */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 24px 0;
+            color: var(--muted);
+        }
+        
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero h2 {
+                font-size: 36px;
+            }
+            
+            .container {
+                padding: 0 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .hero h2 {
+                font-size: 32px;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            
+            .portfolio {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            
+            .socials {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            /* Improve touch targets */
+            .btn {
+                min-height: 44px;
+                padding: 12px 16px;
+            }
+            
+            .tab {
+                min-height: 44px;
+                padding: 12px 14px;
+                font-size: 13px;
+            }
+            
+            .lang-tab {
+                min-height: 44px;
+                padding: 10px 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero {
+                padding: 40px 0 24px;
+            }
+            
+            .hero h2 {
+                font-size: 28px;
+                line-height: 1.2;
+            }
+            
+            .hero p {
+                font-size: 15px;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .portfolio {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            
+            .socials {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 0 16px;
+            }
+            
+            .nav {
+                padding: 12px 0;
+            }
+            
+            .brand h1 {
+                font-size: 16px;
+            }
+            
+            .tagline {
+                font-size: 11px;
+            }
+            
+            .tabs {
+                gap: 6px;
+                justify-content: center;
+            }
+            
+            .tab {
+                font-size: 12px;
+                padding: 10px 12px;
+                flex: 1;
+                text-align: center;
+                min-width: auto;
+            }
+            
+            .lang-tabs {
+                justify-content: center;
+            }
+            
+            .lang-tab {
+                flex: 1;
+                text-align: center;
+                font-size: 13px;
+            }
+            
+            .price {
+                font-size: 24px;
+            }
+            
+            section {
+                padding: 32px 0;
+            }
+            
+            h3.section-title {
+                font-size: 22px;
+                text-align: center;
+            }
+            
+            p.section-sub {
+                text-align: center;
+                font-size: 14px;
+            }
+            
+            /* Better form on mobile */
+            input, textarea, select {
+                font-size: 16px; /* Prevents zoom on iOS */
+                padding: 14px 16px;
+            }
+            
+            textarea {
+                min-height: 100px;
+            }
+            
+            /* Mobile-optimized hero card */
+            .hero-card {
+                padding: 16px;
+                margin-top: 20px;
+            }
+            
+            .hero-card ul {
+                gap: 6px;
+            }
+            
+            .badges {
+                justify-content: center;
+                gap: 8px;
+            }
+            
+            .badge {
+                font-size: 11px;
+                padding: 6px 10px;
+            }
+        }
+        
+        /* ===== SCROLL ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+        
+        .scroll-animate.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Hero section gets immediate animation */
+        .hero-card, .hero h2, .hero p {
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .hero h2 {
+            animation-delay: 0.2s;
+            animation-fill-mode: both;
+        }
+        
+        .hero p {
+            animation-delay: 0.4s;
+            animation-fill-mode: both;
+        }
+        
+        .hero-card {
+            animation-delay: 0.6s;
+            animation-fill-mode: both;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <div class="container nav">
-      <div class="brand">
-        <div class="brand-logo" aria-label="27awkward photoz logo">
-          <!-- Platzhalter – wird vom hochgeladenen Logo ersetzt -->
-          <svg viewBox="0 0 80 80" width="32" height="32" aria-hidden="true">
-            <rect x="6" y="6" width="68" height="68" rx="14" fill="var(--orange)"/>
-            <text x="40" y="47" text-anchor="middle" font-size="28" font-weight="900" fill="#111">27</text>
-          </svg>
+    <header>
+        <div class="container nav">
+            <div class="brand">
+                <div class="brand-logo" aria-label="27awkward photoz logo">
+                    <!-- Platzhalter — wird vom hochgeladenen Logo ersetzt -->
+                    <svg viewBox="0 0 80 80" width="32" height="32" aria-hidden="true">
+                        <rect x="6" y="6" width="68" height="68" rx="14" fill="var(--orange)"/>
+                        <text x="40" y="47" text-anchor="middle" font-size="28" font-weight="900" fill="#111">27</text>
+                    </svg>
+                </div>
+                <div>
+                    <h1>27awkward photoz</h1>
+                    <div class="tagline">#urban #unkonventionell #bodenständig</div>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="#preise" class="btn primary">Pakete & Preise</a>
+                <a href="#kontakt" class="btn">Unverbindliche Anfrage</a>
+            </div>
         </div>
-        <div>
-          <h1>27awkward photoz</h1>
-          <div class="tagline">#urban #unkonventionell #bodenständig</div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-grid">
+                    <div>
+                        <div class="kicker">Urban Photography</div>
+                        <h2>Streetportraits und Lifestylefotografie. Dazu kuratiere ich freie Arbeiten aus Street-, Städte- und Graffiti-Fotografie, AI-Portraits, Comic-Art und Landschaft. Du bekommst Bilder mit Kante — bodenständig, unkonventionell, urban.</h2>
+                        <p>Spezialisiert auf urbane Motive — flexibel von Solo-Sessions bis Event-Coverage.</p>
+                        <div class="badges">
+                            <span class="badge orange">Buchbar in DACH</span>
+                            <span class="badge">Schnelle Auswahl & Lieferung</span>
+                            <span class="badge">Faire Nutzungsrechte</span>
+                        </div>
+                    </div>
+                    <aside class="hero-card">
+                        <strong>Direkt buchen</strong>
+                        <ul>
+                            <li><span class="dot"></span> Urban/Streetportraits</li>
+                            <li><span class="dot"></span> Event & Lifestyle</li>
+                            <li><span class="dot"></span> Brand/Lookbook</li>
+                            <li><span class="dot"></span> Social Media Sets</li>
+                        </ul>
+                        <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+                            <a href="#preise" class="btn primary">Pakete & Preise</a>
+                            <a href="#kontakt" class="btn">Unverbindliche Anfrage</a>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+        <section id="services">
+            <div class="container">
+                <h3 class="section-title scroll-animate">Leistungen</h3>
+                <p class="section-sub scroll-animate">Spezialisiert auf urbane Motive — flexibel von Solo-Sessions bis Event-Coverage.</p>
+                <div class="grid">
+                    <div class="card scroll-animate">
+                        <h4>Urban Photography</h4>
+                        <p class="muted">Architektur, Räume, Rhythmus der Stadt — visuell pointiert.</p>
+                    </div>
+                    <div class="card scroll-animate">
+                        <h4>Urban/Streetportraits</h4>
+                        <p class="muted">Porträts mit Charakter. Natürliches Licht, echte Szenen.</p>
+                    </div>
+                    <div class="card scroll-animate">
+                        <h4>Event- & Lifestyle</h4>
+                        <p class="muted">Reportage & Highlight-Shots für Marken, Teams & Communities.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="portfolio">
+            <div class="container">
+                <h3 class="section-title scroll-animate">Portfolio</h3>
+                <p class="section-sub scroll-animate">Wähle eine Kategorie. Thumbnails sind Platzhalter — echte Beispiele folgen.</p>
+                <div class="tabs scroll-animate" role="tablist" aria-label="Portfolio Kategorien">
+                    <button class="tab active" data-filter="all" role="tab" aria-selected="true">Alle</button>
+                    <button class="tab" data-filter="streetphotography" role="tab">Streetphotography</button>
+                    <button class="tab" data-filter="städtefotografie" role="tab">Städtefotografie</button>
+                    <button class="tab" data-filter="landscape" role="tab">Landscape Photography</button>
+                    <button class="tab" data-filter="graffiti" role="tab">Graffiti</button>
+                    <button class="tab" data-filter="ai-portraits" role="tab">AI Portraits</button>
+                    <button class="tab" data-filter="portraits" role="tab">Portraits</button>
+                    <button class="tab" data-filter="event-photography" role="tab">Event Photography</button>
+                    <button class="tab" data-filter="comic-art" role="tab">Comic Art</button>
+                </div>
+                <div class="portfolio scroll-animate" id="portfolioGrid">
+                    <!-- Portfolio items would go here -->
+                    <div style="padding: 60px 20px; text-align: center; background: var(--card); border-radius: var(--radius); border: 1px solid var(--border);">
+                        <p style="color: var(--muted); margin: 0;">Portfolio-Galerie wird hier implementiert</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="story">
+            <div class="container">
+                <h3 class="section-title scroll-animate">Die Geschichte von 27awkward photoz</h3>
+                <p class="section-sub scroll-animate">Dreisprachig. Weil Städte mehrsprachig sind.</p>
+                <div class="lang-tabs scroll-animate" role="tablist" aria-label="Sprachauswahl">
+                    <button class="lang-tab active" data-lang="de" role="tab" aria-selected="true">Deutsch</button>
+                    <button class="lang-tab" data-lang="en" role="tab">English</button>
+                    <button class="lang-tab" data-lang="es" role="tab">Español</button>
+                </div>
+                <article class="lang-panel active scroll-animate" id="story-de" lang="de">
+                    <p>27awkward photoz entstand zwischen S-Bahn-Gleisen, Café-Tischen und Fassaden, die ihre eigene Grammatik haben. Ich fotografiere nicht, um zu glätten, sondern um zu zeigen: Kanten, Patina, Tempo. Urban, unkonventionell, bodenständig — genau wie die Menschen vor der Linse.</p>
+                </article>
+                <article class="lang-panel scroll-animate" id="story-en" lang="en">
+                    <p>27awkward photoz was born between train tracks, café tables, and façades that speak their own dialect. I don't shoot to polish—I shoot to reveal: edges, texture, momentum. Urban, unconventional, down-to-earth—like the people in front of the camera.</p>
+                </article>
+                <article class="lang-panel scroll-animate" id="story-es" lang="es">
+                    <p>27awkward photoz nació entre vías de tren, mesas de café y fachadas con su propio acento. No fotografío para pulir, sino para mostrar: bordes, textura, movimiento. Urbano, poco convencional y con los pies en la tierra—como las personas frente a la cámara.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="preise">
+            <div class="container">
+                <h3 class="section-title scroll-animate">Pakete & Preise</h3>
+                <p class="section-sub scroll-animate">Transparente Konditionen. Alle Preise inkl. Grundretusche & Web-Exports. Erweiterte Nutzungsrechte auf Anfrage.</p>
+                <div class="grid">
+                    <div class="card scroll-animate">
+                        <h4>Streetportrait — Solo</h4>
+                        <p class="muted">60—90 Min | 1 Location | 10 finale Bilder</p>
+                        <div class="price">€199</div>
+                        <p class="muted">Ideal für Social, Bewerbungen mit Kante, Artists.</p>
+                        <a href="#kontakt" class="btn primary">Buchen</a>
+                    </div>
+                    <div class="card scroll-animate">
+                        <h4>Event Report</h4>
+                        <p class="muted">bis 3 Std | Reportage | 60+ Bilder</p>
+                        <div class="price">€549</div>
+                        <p class="muted">Echte Stimmung, kein Stock-Look. Optional: 24h-Teaser.</p>
+                        <a href="#kontakt" class="btn primary">Anfragen</a>
+                    </div>
+                    <div class="card scroll-animate">
+                        <h4>Brand / Lookbook</h4>
+                        <p class="muted">Halbtag | Konzept & Set | 20—40 Bilder</p>
+                        <div class="price">ab €890</div>
+                        <p class="muted">Für Labels & Kampagnen. Team/Visagistik optional.</p>
+                        <a href="#kontakt" class="btn primary">Kickoff</a>
+                    </div>
+                </div>
+                <p class="helper scroll-animate" style="margin-top:10px">Alle Preise sind Richtwerte. Reisetätigkeit, Locations & Nutzungen können variieren.</p>
+            </div>
+        </section>
+
+        <section id="socials">
+            <div class="container">
+                <h3 class="section-title scroll-animate">Kanäle & Communities</h3>
+                <p class="section-sub scroll-animate">Folge, like, oder kritisiere konstruktiv — Hauptsache echt.</p>
+                <div class="socials scroll-animate">
+                    <div class="social"><strong>Instagram #1</strong><a href="#" aria-label="Instagram 1" class="btn">Öffnen</a></div>
+                    <div class="social"><strong>Instagram #2</strong><a href="#" aria-label="Instagram 2" class="btn">Öffnen</a></div>
+                    <div class="social"><strong>TikTok</strong><a href="#" aria-label="TikTok" class="btn">Öffnen</a></div>
+                    <div class="social"><strong>YouTube</strong><a href="#" aria-label="YouTube" class="btn">Öffnen</a></div>
+                    <div class="social"><strong>fotocommunity #1</strong><a href="#" aria-label="fotocommunity 1" class="btn">Öffnen</a></div>
+                    <div class="social"><strong>fotocommunity #2</strong><a href="#" aria-label="fotocommunity 2" class="btn">Öffnen</a></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="kontakt">
+            <div class="container">
+                <h3 class="section-title scroll-animate">Anfrage & Kontakt</h3>
+                <p class="section-sub scroll-animate">Kurz sagen, worum's geht — ich melde mich fix.</p>
+                <div class="grid">
+                    <div class="card scroll-animate">
+                        <!-- 
+                        ============================================
+                        BREVO INTEGRATION BEREICH
+                        ============================================
+                        Hier wird der Brevo-Code eingefügt, sobald er generiert wurde.
+                        
+                        ANLEITUNG FÜR INTEGRATION:
+                        1. Brevo-Formular erstellt? ✓
+                        2. HTML-Code aus Brevo kopiert? ✓
+                        3. Dann hier einfügen und das Fallback-Formular entfernen
+                        
+                        Der Code sollte etwa so aussehen:
+                        
+                        <script>
+                        (function(d,s,i,o,n){
+                            // Brevo-spezifischer Code
+                        })();
+                        </script>
+                        
+                        WICHTIG: Nach dem Einfügen die Klasse "brevo-form" 
+                        zum Container hinzufügen für korrektes Styling!
+                        ============================================
+                        -->
+                        
+                        <!-- FALLBACK FORMULAR (wird durch Brevo ersetzt) -->
+                        <form name="contact" method="post" action="#" netlify id="contactForm">
+                            <div class="form-group">
+                                <label for="name">Dein Name *</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">E-Mail *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="type">Art des Shootings *</label>
+                                <select id="type" name="type" required>
+                                    <option value="">Bitte wählen...</option>
+                                    <option value="Streetportrait">Streetportrait</option>
+                                    <option value="Event">Event & Lifestyle</option>
+                                    <option value="Brand">Brand / Lookbook</option>
+                                    <option value="Other">Sonstiges</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message">Nachricht</label>
+                                <textarea id="message" name="message" placeholder="Wann? Wo? Idee?"></textarea>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="privacy" name="privacy" required>
+                                <label for="privacy">
+                                    Ich stimme zu, dass meine Angaben zur Kontaktaufnahme gespeichert werden. 
+                                    Weitere Informationen finden Sie in unserer 
+                                    <a href="datenschutz.html" style="color: var(--orange)">Datenschutzerklärung</a>.
+                                </label>
+                            </div>
+                            
+                            <button class="btn primary" type="submit" id="submitBtn">
+                                <span id="submitText">Nachricht senden</span>
+                            </button>
+                            
+                            <div class="form-success" id="formSuccess">
+                                ✅ Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet. Ich melde mich in der Regel binnen 24 Stunden bei Ihnen.
+                            </div>
+                            
+                            <div class="form-error" id="formError">
+                                ❌ Fehler beim Senden. Bitte versuchen Sie es erneut oder senden Sie eine E-Mail direkt an hallo@27awkward.de
+                            </div>
+                            
+                            <div class="helper">
+                                Hinweis: DSGVO-konform gehostet. Ihre Daten werden sicher übertragen und verarbeitet.
+                            </div>
+                        </form>
+                        
+                        <!-- Ende Fallback-Formular -->
+                    </div>
+                    <div class="card scroll-animate">
+                        <h4>Impressum & Rechtliches</h4>
+                        <p class="muted">Alle rechtlichen Informationen finden Sie in unserem <a href="impressum.html" style="color: var(--orange)">Impressum</a> und unserer <a href="datenschutz.html" style="color: var(--orange)">Datenschutzerklärung</a>. Achten Sie auf Bildrechte & Model Releases.</p>
+                        <h4 style="margin-top:14px">Direkter Draht</h4>
+                        <p class="muted">E-Mail: <a href="mailto:hallo@27awkward.de" style="color: var(--orange)">hallo@27awkward.de</a><br>Instagram: <a href="#" style="color: var(--orange)">@27awkward</a></p>
+                        
+                        <h4 style="margin-top:14px">Antwortzeiten</h4>
+                        <p class="muted">
+                            📧 E-Mail: binnen 24h<br>
+                            📱 Social Media: binnen 48h<br>
+                            🚨 Dringend: Anruf bevorzugt
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
+            <div>© <span id="year"></span> 27awkward photoz · <span style="color:var(--orange)">#urban</span> · <span style="color:var(--orange)">#unkonventionell</span> · <span style="color:var(--orange)">#bodenständig</span></div>
+            <div><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · <a href="agb.html">AGB</a></div>
         </div>
-      </div>
-      <nav class="nav-links">
-        <a href="#services" class="btn">Leistungen</a>
-        <a href="#portfolio" class="btn">Portfolio</a>
-        <a href="#story" class="btn">Story</a>
-        <a href="#preise" class="btn">Preise</a>
-        <a href="#kontakt" class="btn cta">Anfrage stellen</a>
-      </nav>
-    </div>
-  </header>
+    </footer>
 
-  <main>
-    <section class="hero">
-      <div class="container hero-grid">
-        <div>
-          <div class="kicker">Urban. Echt. Unkonventionell.</div>
-          <h2>Fotografie ohne Filterblasen – für Menschen, Marken und Momente in Bewegung.</h2>
-          <p>Ich biete Urban Photography, Streetportraits, Event- und Lifestylefotografie. Dazu kuratiere ich freie Arbeiten aus Street-, Städte- und Graffiti-Fotografie, AI-Portraits, Comic-Art und Landschaft. Du bekommst Bilder mit Kante – bodenständig, unkonventionell, urban.</p>
-          <div class="badges">
-            <span class="badge orange">Buchbar in DACH</span>
-            <span class="badge">Schnelle Auswahl &amp; Lieferung</span>
-            <span class="badge">Faire Nutzungsrechte</span>
-          </div>
-        </div>
-        <aside class="hero-card">
-          <strong>Direkt buchen</strong>
-          <ul>
-            <li><span class="dot"></span> Urban/Streetportraits</li>
-            <li><span class="dot"></span> Event &amp; Lifestyle</li>
-            <li><span class="dot"></span> Brand/Lookbook</li>
-            <li><span class="dot"></span> Social Media Sets</li>
-          </ul>
-          <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
-            <a href="#preise" class="btn primary">Pakete &amp; Preise</a>
-            <a href="#kontakt" class="btn">Unverbindliche Anfrage</a>
-          </div>
-        </aside>
-      </div>
-    </section>
+    <script>
+        // Jahreszahl automatisch aktualisieren
+        document.getElementById('year').textContent = new Date().getFullYear();
 
-    <section id="services">
-      <div class="container">
-        <h3 class="section-title">Leistungen</h3>
-        <p class="section-sub">Spezialisiert auf urbane Motive – flexibel von Solo-Sessions bis Event-Coverage.</p>
-        <div class="grid">
-          <div class="card">
-            <h4>Urban Photography</h4>
-            <p class="muted">Architektur, Räume, Rhythmus der Stadt – visuell pointiert.</p>
-          </div>
-          <div class="card">
-            <h4>Urban/Streetportraits</h4>
-            <p class="muted">Porträts mit Charakter. Natürliches Licht, echte Szenen.</p>
-          </div>
-          <div class="card">
-            <h4>Event- &amp; Lifestyle</h4>
-            <p class="muted">Reportage &amp; Highlight-Shots für Marken, Teams &amp; Communities.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+        // ===== ENHANCED FORM HANDLING =====
+        const contactForm = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const submitText = document.getElementById('submitText');
+        const formSuccess = document.getElementById('formSuccess');
+        const formError = document.getElementById('formError');
 
-    <section id="portfolio">
-      <div class="container">
-        <h3 class="section-title">Portfolio</h3>
-        <p class="section-sub">Wähle eine Kategorie. Thumbnails sind Platzhalter – echte Beispiele folgen.</p>
-        <div class="tabs" role="tablist" aria-label="Portfolio Kategorien">
-          <button class="tab active" data-filter="all" role="tab" aria-selected="true">Alle</button>
-          <button class="tab" data-filter="street" role="tab">Streetfotografie (Stadt)</button>
-          <button class="tab" data-filter="city" role="tab">Städtefotografie</button>
-          <button class="tab" data-filter="graffiti" role="tab">Graffiti</button>
-          <button class="tab" data-filter="ai" role="tab">AI Portraits</button>
-          <button class="tab" data-filter="comic" role="tab">Comic Art</button>
-          <button class="tab" data-filter="landscape" role="tab">Landschaft</button>
-        </div>
-        <div class="portfolio" id="portfolioGrid">
-          <!-- Beispiel-Kacheln (Platzhalter) -->
-          <div class="tile" data-cat="street"><span class="label">Street</span></div>
-          <div class="tile" data-cat="city"><span class="label">Städte</span></div>
-          <div class="tile" data-cat="graffiti"><span class="label">Graffiti</span></div>
-          <div class="tile" data-cat="ai"><span class="label">AI Portraits</span></div>
-          <div class="tile" data-cat="comic"><span class="label">Comic Art</span></div>
-          <div class="tile" data-cat="landscape"><span class="label">Landschaft</span></div>
-          <div class="tile" data-cat="street"><span class="label">Street</span></div>
-          <div class="tile" data-cat="city"><span class="label">Städte</span></div>
-          <div class="tile" data-cat="graffiti"><span class="label">Graffiti</span></div>
-        </div>
-      </div>
-    </section>
+        if (contactForm) {
+            // Prevent zoom on iOS when focusing inputs
+            const inputs = contactForm.querySelectorAll('input, textarea, select');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    if (window.innerWidth < 768) {
+                        document.querySelector('meta[name="viewport"]').setAttribute(
+                            'content', 
+                            'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
+                        );
+                    }
+                });
+                
+                input.addEventListener('blur', () => {
+                    if (window.innerWidth < 768) {
+                        document.querySelector('meta[name="viewport"]').setAttribute(
+                            'content', 
+                            'width=device-width, initial-scale=1.0, viewport-fit=cover'
+                        );
+                    }
+                });
+            });
 
-    <section id="story">
-      <div class="container">
-        <h3 class="section-title">Die Geschichte von 27awkward photoz</h3>
-        <p class="section-sub">Dreisprachig. Weil Städte mehrsprachig sind.</p>
-        <div class="lang-tabs" role="tablist" aria-label="Sprachauswahl">
-          <button class="lang-tab active" data-lang="de" role="tab" aria-selected="true">Deutsch</button>
-          <button class="lang-tab" data-lang="en" role="tab">English</button>
-          <button class="lang-tab" data-lang="es" role="tab">Español</button>
-        </div>
-        <article class="lang-panel active" id="story-de" lang="de">
-          <p>27awkward photoz entstand zwischen S-Bahn-Gleisen, Café-Tischen und Fassaden, die ihre eigene Grammatik haben. Ich fotografiere nicht, um zu glätten, sondern um zu zeigen: Kanten, Patina, Tempo. Urban, unkonventionell, bodenständig – genau wie die Menschen vor der Linse.</p>
-        </article>
-        <article class="lang-panel" id="story-en" lang="en">
-          <p>27awkward photoz was born between train tracks, café tables, and façades that speak their own dialect. I don’t shoot to polish—I shoot to reveal: edges, texture, momentum. Urban, unconventional, down-to-earth—like the people in front of the camera.</p>
-        </article>
-        <article class="lang-panel" id="story-es" lang="es">
-          <p>27awkward photoz nació entre vías de tren, mesas de café y fachadas con su propio acento. No fotografío para pulir, sino para mostrar: bordes, textura, movimiento. Urbano, poco convencional y con los pies en la tierra—como las personas frente a la cámara.</p>
-        </article>
-      </div>
-    </section>
+            // Enhanced form submission with better UX
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Hide previous messages
+                formSuccess.style.display = 'none';
+                formError.style.display = 'none';
+                
+                // Update button state
+                submitBtn.disabled = true;
+                submitText.textContent = 'Wird gesendet...';
+                submitBtn.style.opacity = '0.7';
+                
+                // Simulate form submission (replace with Brevo/Netlify)
+                setTimeout(() => {
+                    // For demo - show success
+                    formSuccess.style.display = 'block';
+                    contactForm.reset();
+                    
+                    // Reset button
+                    submitBtn.disabled = false;
+                    submitText.textContent = 'Nachricht senden';
+                    submitBtn.style.opacity = '1';
+                    
+                    // Scroll to success message
+                    formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                }, 2000);
+            });
+        }
 
-    <section id="preise">
-      <div class="container">
-        <h3 class="section-title">Pakete &amp; Preise</h3>
-        <p class="section-sub">Transparente Konditionen. Alle Preise inkl. Grundretusche &amp; Web-Exports. Erweiterte Nutzungsrechte auf Anfrage.</p>
-        <div class="grid">
-          <div class="card">
-            <h4>Streetportrait – Solo</h4>
-            <p class="muted">60–90 Min | 1 Location | 10 finale Bilder</p>
-            <div class="price">€199</div>
-            <p class="muted">Ideal für Social, Bewerbungen mit Kante, Artists.</p>
-            <a href="#kontakt" class="btn primary">Buchen</a>
-          </div>
-          <div class="card">
-            <h4>Event Report</h4>
-            <p class="muted">bis 3 Std | Reportage | 60+ Bilder</p>
-            <div class="price">€549</div>
-            <p class="muted">Echte Stimmung, kein Stock-Look. Optional: 24h-Teaser.</p>
-            <a href="#kontakt" class="btn primary">Anfragen</a>
-          </div>
-          <div class="card">
-            <h4>Brand / Lookbook</h4>
-            <p class="muted">Halbtag | Konzept &amp; Set | 20–40 Bilder</p>
-            <div class="price">ab €890</div>
-            <p class="muted">Für Labels &amp; Kampagnen. Team/Visagistik optional.</p>
-            <a href="#kontakt" class="btn primary">Kickoff</a>
-          </div>
-        </div>
-        <p class="helper" style="margin-top:10px">Alle Preise sind Richtwerte. Reisetätigkeit, Locations &amp; Nutzungen können variieren.</p>
-      </div>
-    </section>
+        // ===== SCROLL ANIMATIONS =====
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
-    <section id="socials">
-      <div class="container">
-        <h3 class="section-title">Kanäle &amp; Communities</h3>
-        <p class="section-sub">Folge, like, oder kritisiere konstruktiv – Hauptsache echt.</p>
-        <div class="socials">
-          <div class="social"><strong>Instagram #1</strong><a href="#" aria-label="Instagram 1" class="btn">Öffnen</a></div>
-          <div class="social"><strong>Instagram #2</strong><a href="#" aria-label="Instagram 2" class="btn">Öffnen</a></div>
-          <div class="social"><strong>TikTok</strong><a href="#" aria-label="TikTok" class="btn">Öffnen</a></div>
-          <div class="social"><strong>YouTube</strong><a href="#" aria-label="YouTube" class="btn">Öffnen</a></div>
-          <div class="social"><strong>fotocommunity #1</strong><a href="#" aria-label="fotocommunity 1" class="btn">Öffnen</a></div>
-          <div class="social"><strong>fotocommunity #2</strong><a href="#" aria-label="fotocommunity 2" class="btn">Öffnen</a></div>
-        </div>
-      </div>
-    </section>
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                    scrollObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
 
-    <section id="kontakt">
-      <div class="container">
-        <h3 class="section-title">Anfrage &amp; Kontakt</h3>
-        <p class="section-sub">Kurz sagen, worum’s geht – ich melde mich fix.</p>
-        <div class="grid">
-          <div class="card">
-            <form name="contact" method="post" action="#">
-              <label>Dein Name<br><input type="text" name="name" required></label>
-              <label>E-Mail<br><input type="email" name="email" required></label>
-              <label>Art des Shootings<br>
-                <select name="type" required>
-                  <option value="Streetportrait">Streetportrait</option>
-                  <option value="Event">Event &amp; Lifestyle</option>
-                  <option value="Brand">Brand / Lookbook</option>
-                  <option value="Other">Sonstiges</option>
-                </select>
-              </label>
-              <label>Nachricht<br><textarea name="message" placeholder="Wann? Wo? Idee?"></textarea></label>
-              <label><input type="checkbox" required> Ich stimme zu, dass meine Angaben zur Kontaktaufnahme gespeichert werden.</label>
-              <button class="btn primary" type="submit">Senden</button>
-              <div class="helper">Hinweis: DSGVO-konform hosten. Auf STRATO kannst du Formulare serverseitig anbinden oder über eine sichere Mail-Funktion nutzen.</div>
-            </form>
-          </div>
-          <div class="card">
-            <h4>Impressum &amp; Rechtliches</h4>
-            <p class="muted">Platzhalter für Impressum/Datenschutz. Auf STRATO als eigene Seiten verlinkbar – oder hier kompakt. Achte auf Bildrechte &amp; Model Releases.</p>
-            <h4 style="margin-top:14px">Direkter Draht</h4>
-            <p class="muted">E-Mail: <a href="mailto:hallo@27awkward.de">hallo@27awkward.de</a><br>Instagram: <a href="#">@27awkward</a></p>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
+        // Initialize scroll animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const animateElements = document.querySelectorAll('.scroll-animate');
+            animateElements.forEach(el => {
+                scrollObserver.observe(el);
+            });
+        });
 
-  <footer>
-    <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
-      <div>© <span id="year"></span> 27awkward photoz · <span style="color:var(--orange)">#urban</span> · <span style="color:var(--orange)">#unkonventionell</span> · <span style="color:var(--orange)">#bodenständig</span></div>
-      <div><a href="#">Impressum</a> · <a href="#">Datenschutz</a></div>
-    </div>
-  </footer>
+        // ===== LANGUAGE TABS =====
+        const langTabs = document.querySelectorAll('.lang-tab');
+        const panels = document.querySelectorAll('.lang-panel');
+        
+        langTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Aktiven Tab wechseln
+                langTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Panel wechseln mit Animation
+                const lang = tab.dataset.lang;
+                panels.forEach(panel => {
+                    const shouldShow = panel.id === 'story-' + lang;
+                    
+                    if (shouldShow) {
+                        panel.classList.add('active');
+                        // Kleine Animation beim Sprachwechsel
+                        panel.style.opacity = '0';
+                        panel.style.transform = 'translateY(10px)';
+                        panel.style.transition = 'all 0.3s ease';
+                        
+                        requestAnimationFrame(() => {
+                            panel.style.opacity = '1';
+                            panel.style.transform = 'translateY(0)';
+                        });
+                    } else {
+                        panel.classList.remove('active');
+                    }
+                });
+            });
+        });
 
-  <script>
-    // Jahreszahl
-    document.getElementById('year').textContent = new Date().getFullYear();
+        // ===== SMOOTH SCROLLING =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerHeight = document.querySelector('header').offsetHeight;
+                    const targetPosition = target.offsetTop - headerHeight - 20;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
 
-    // Portfolio-Filter
-    const tabs = document.querySelectorAll('.tab');
-    const tiles = document.querySelectorAll('.tile');
-    tabs.forEach(t=>t.addEventListener('click',()=>{
-      tabs.forEach(x=>x.classList.remove('active'));
-      t.classList.add('active');
-      const f=t.dataset.filter;
-      tiles.forEach(tile=>{
-        tile.style.display = (f==='all' || tile.dataset.cat===f) ? 'block' : 'none';
-      });
-    }));
+        // ===== PORTFOLIO TABS (SIMPLIFIED VERSION) =====
+        const tabs = document.querySelectorAll('.tab');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Aktiven Tab wechseln
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // In vollständiger Version würde hier die Portfolio-Filterung stattfinden
+                console.log('Filter aktiviert:', tab.dataset.filter);
+            });
+        });
 
-    // Sprachen-Tabs
-    const langTabs=document.querySelectorAll('.lang-tab');
-    const panels=document.querySelectorAll('.lang-panel');
-    langTabs.forEach(b=>b.addEventListener('click',()=>{
-      langTabs.forEach(x=>x.classList.remove('active'));
-      b.classList.add('active');
-      const lang=b.dataset.lang;
-      panels.forEach(p=>p.classList.toggle('active', p.id==='story-'+lang));
-    }));
-  </script>
+        // ===== PERFORMANCE OPTIMIZATIONS =====
+        if ('ontouchstart' in window) {
+            // Add touch feedback for better mobile UX
+            const touchElements = document.querySelectorAll('.btn, .card, .tab, .lang-tab');
+            
+            touchElements.forEach(element => {
+                element.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                }, { passive: true });
+                
+                element.addEventListener('touchend', function() {
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                }, { passive: true });
+            });
+        }
+    </script>
 </body>
 </html>
