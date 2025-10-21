@@ -370,127 +370,622 @@
             gap: 12px;
         }
         
-        /* ===== FORMS (ENHANCED FOR BREVO) ===== */
-        form {
-            display: grid;
-            gap: 16px;
+        /* ===== LAZY LOADING & IMAGES ===== */
+        .lazy-image {
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
         
-        .form-group {
-            display: grid;
-            gap: 6px;
+        .lazy-image.loaded {
+            opacity: 1;
         }
         
-        .form-group label {
-            font-weight: 600;
-            color: var(--text);
-            font-size: 14px;
+        .image-placeholder {
+            background: linear-gradient(90deg, var(--card) 0%, var(--bg-2) 50%, var(--card) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: var(--radius);
         }
         
-        input, textarea, select {
-            width: 100%;
-            padding: 14px 16px;
-            border-radius: 12px;
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        /* Optimized portfolio tiles for real images */
+        .tile {
+            position: relative;
+            aspect-ratio: 4/3;
+            border-radius: 16px;
             border: 1px solid var(--border);
+            overflow: hidden;
+            background: radial-gradient(1200px 400px at 10% 10%, rgba(255,122,0,.08), transparent 60%), #16171a;
+            cursor: pointer;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        
+        .tile img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .tile:hover img {
+            transform: scale(1.05);
+        }
+        
+        .tile .label {
+            position: absolute;
+            left: 10px;
+            bottom: 10px;
+            background: rgba(0,0,0,.7);
+            backdrop-filter: blur(8px);
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            border: 1px solid rgba(255,255,255,.1);
+            color: white;
+            font-weight: 600;
+            z-index: 2;
+        }
+        
+        /* Category tiles with enhanced hover overlay */
+        .category-tile {
+            cursor: pointer;
+        }
+        
+        .category-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,.7), rgba(255,122,0,.3));
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            z-index: 3;
+        }
+        
+        .category-tile:hover .category-overlay {
+            opacity: 1;
+        }
+        
+        .category-info {
+            color: white;
+            padding: 20px;
+        }
+        
+        .category-info h4 {
+            margin: 0 0 8px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        
+        .category-info p {
+            margin: 0 0 12px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .view-gallery {
+            display: inline-block;
+            padding: 8px 16px;
+            background: var(--orange);
+            color: #111;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            transition: transform 0.2s ease;
+        }
+        
+        .view-gallery:hover {
+            transform: scale(1.05);
+        }
+        
+        /* ===== GALLERY MODAL ===== */
+        .gallery-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .gallery-modal.active {
+            display: flex;
+        }
+        
+        .gallery-backdrop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,.9);
+            backdrop-filter: blur(8px);
+        }
+        
+        .gallery-modal-content {
+            position: relative;
+            width: 90%;
+            max-width: 1200px;
+            max-height: 90%;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            z-index: 1001;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        .gallery-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
             background: var(--bg-2);
+        }
+        
+        .gallery-header h3 {
+            margin: 0;
+            font-size: 20px;
+            color: var(--orange);
+        }
+        
+        .gallery-close {
+            background: none;
+            border: none;
             color: var(--text);
-            font-family: inherit;
-            font-size: 16px;
-            transition: all 0.2s ease;
+            font-size: 28px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: background-color 0.2s ease;
         }
         
-        input:focus, textarea:focus, select:focus {
-            outline: none;
+        .gallery-close:hover {
+            background: var(--border);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            padding: 24px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .gallery-item {
+            aspect-ratio: 4/3;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.02);
             border-color: var(--orange);
-            background: rgba(255,122,0,.05);
-            box-shadow: 0 0 0 3px rgba(255,122,0,.1);
         }
         
-        textarea {
-            min-height: 120px;
-            resize: vertical;
-            font-family: inherit;
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
         }
         
-        .checkbox-group {
+        .gallery-item.main-image {
+            border: 2px solid var(--orange);
+            position: relative;
+        }
+        
+        .gallery-item.main-image::after {
+            content: 'MAIN';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: var(--orange);
+            color: #111;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+        
+        /* ===== LIGHTBOX ===== */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            backdrop-filter: blur(8px);
+        }
+        
+        .lightbox.active {
+            display: flex;
+        }
+        
+        .lightbox-content {
+            position: relative;
+            max-width: 95vw;
+            max-height: 95vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            animation: lightboxZoomIn 0.3s ease-out;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            touch-action: manipulation;
+        }
+        
+        @keyframes lightboxZoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* Swipe indicator styles */
+        .swipe-indicator {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 122, 0, 0.8);
+            color: #111;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .swipe-indicator.left {
+            left: 80px;
+        }
+        
+        .swipe-indicator.right {
+            right: 80px;
+        }
+        
+        .swipe-indicator.show {
+            opacity: 1;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border: none;
+            color: white;
+            font-size: 32px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .lightbox-close:hover {
+            background: var(--orange);
+            color: #111;
+            transform: scale(1.1);
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            border: none;
+            color: white;
+            font-size: 24px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .lightbox-nav:hover {
+            background: var(--orange);
+            color: #111;
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .lightbox-nav.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        .lightbox-nav.disabled:hover {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            transform: translateY(-50%);
+        }
+        
+        .lightbox-prev {
+            left: 20px;
+        }
+        
+        .lightbox-next {
+            right: 20px;
+        }
+        
+        .lightbox-info {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 600;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            max-width: 90%;
+        }
+        
+        .lightbox-counter {
+            color: var(--orange);
+            margin-right: 8px;
+        }
+        
+        /* ===== COOKIE BANNER ===== */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, var(--card), #0a0a0b);
+            border-top: 1px solid var(--border);
+            padding: 20px;
+            z-index: 3000;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 -10px 30px rgba(0,0,0,.4);
+        }
+        
+        .cookie-banner.show {
+            transform: translateY(0);
+        }
+        
+        .cookie-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .cookie-info {
             display: flex;
             align-items: flex-start;
+            gap: 16px;
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .cookie-icon {
+            font-size: 32px;
+            line-height: 1;
+            margin-top: 4px;
+        }
+        
+        .cookie-text h3 {
+            margin: 0 0 8px;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        
+        .cookie-text p {
+            margin: 0;
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.4;
+            max-width: 500px;
+        }
+        
+        .cookie-actions {
+            display: flex;
             gap: 12px;
-            padding: 12px;
-            background: var(--bg-2);
+            align-items: center;
+        }
+        
+        .cookie-btn {
+            padding: 12px 20px;
             border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            min-width: 120px;
+        }
+        
+        .cookie-btn-essential {
+            background: var(--bg-2);
+            color: var(--text);
             border: 1px solid var(--border);
         }
         
-        .checkbox-group input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            margin: 0;
-            accent-color: var(--orange);
+        .cookie-btn-essential:hover {
+            background: var(--border);
+            transform: translateY(-1px);
         }
         
-        .checkbox-group label {
-            flex: 1;
-            font-size: 13px;
-            line-height: 1.4;
-            margin: 0;
+        .cookie-btn-all {
+            background: linear-gradient(180deg, var(--orange), #c85300);
+            color: #111;
+            border: 1px solid transparent;
+            box-shadow: 0 4px 16px rgba(255,122,0,.3);
         }
         
-        .form-success {
-            padding: 16px;
-            background: rgba(46, 204, 113, 0.1);
-            border: 1px solid var(--success);
-            border-radius: 12px;
-            color: var(--success);
-            font-weight: 600;
-            display: none;
+        .cookie-btn-all:hover {
+            background: linear-gradient(180deg, #ff8c1a, #d45f00);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255,122,0,.4);
         }
         
-        .form-error {
-            padding: 16px;
-            background: rgba(255, 71, 87, 0.1);
-            border: 1px solid var(--error);
-            border-radius: 12px;
-            color: var(--error);
-            font-weight: 600;
-            display: none;
-        }
-        
-        .helper {
+        .cookie-links {
             font-size: 12px;
             color: var(--muted);
-            line-height: 1.4;
+            text-align: center;
+            width: 100%;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
         }
         
-        /* Brevo form integration styles */
-        .brevo-form {
-            width: 100% !important;
+        .cookie-links a {
+            color: var(--orange);
+            text-decoration: none;
         }
         
-        .brevo-form input,
-        .brevo-form textarea,
-        .brevo-form select {
-            background: var(--bg-2) !important;
-            color: var(--text) !important;
-            border: 1px solid var(--border) !important;
-            border-radius: 12px !important;
-            padding: 14px 16px !important;
-            font-family: Inter, sans-serif !important;
+        .cookie-links a:hover {
+            text-decoration: underline;
         }
         
-        .brevo-form button {
-            background: linear-gradient(180deg, var(--orange), #c85300) !important;
-            border: none !important;
-            border-radius: 12px !important;
-            color: #111 !important;
-            font-weight: 700 !important;
-            padding: 14px 20px !important;
-            transition: all 0.2s ease !important;
+        /* Cookie banner responsive */
+        @media (max-width: 768px) {
+            .cookie-content {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+            
+            .cookie-info {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                min-width: auto;
+            }
+            
+            .cookie-icon {
+                margin-top: 0;
+            }
+            
+            .cookie-actions {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .cookie-btn {
+                flex: 1;
+                min-width: 140px;
+            }
+            
+            .cookie-links {
+                margin-top: 12px;
+                padding-top: 12px;
+            }
         }
         
-        .brevo-form button:hover {
-            transform: translateY(-2px) !important;
-            box-shadow: 0 6px 20px rgba(255,122,0,.35) !important;
+        @media (max-width: 480px) {
+            .cookie-banner {
+                padding: 16px;
+            }
+            
+            .cookie-actions {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .cookie-btn {
+                width: 100%;
+            }
+            
+            .cookie-text p {
+                font-size: 13px;
+            }
+        }
+        
+        /* Hide cookie banner when user made choice */
+        .cookie-banner.hidden {
+            display: none;
+        }
+        
+        /* Loading states */
+        .loading {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,122,0,.1), transparent);
+            animation: loading 1.5s infinite;
+        }
+        
+        @keyframes loading {
+            100% { left: 100%; }
         }
         
         /* ===== LANGUAGE TABS ===== */
@@ -551,6 +1046,37 @@
         
         .social:hover {
             border-color: var(--orange);
+        }
+        
+        /* ===== FORMS ===== */
+        form {
+            display: grid;
+            gap: 10px;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: #0f0f11;
+            color: var(--text);
+            transition: border-color 0.2s ease;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--orange);
+        }
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .helper {
+            font-size: 12px;
+            color: var(--muted);
         }
         
         /* ===== FOOTER ===== */
@@ -732,9 +1258,135 @@
                 font-size: 11px;
                 padding: 6px 10px;
             }
+            
+            /* Gallery modal responsive */
+            .gallery-modal-content {
+                width: 95%;
+                max-height: 95%;
+            }
+            
+            .gallery-header {
+                padding: 16px 20px;
+            }
+            
+            .gallery-header h3 {
+                font-size: 18px;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 6px;
+                padding: 16px;
+                max-height: 400px;
+            }
+            
+            .category-info h4 {
+                font-size: 16px;
+            }
+            
+            .category-info p {
+                font-size: 13px;
+            }
+            
+            .view-gallery {
+                font-size: 11px;
+                padding: 6px 12px;
+            }
+            
+            /* Lightbox mobile optimizations */
+            .lightbox-close, .lightbox-nav {
+                width: 44px;
+                height: 44px;
+                font-size: 20px;
+            }
+            
+            .lightbox-close {
+                top: 15px;
+                right: 15px;
+            }
+            
+            .lightbox-prev {
+                left: 15px;
+            }
+            
+            .lightbox-next {
+                right: 15px;
+            }
+            
+            .lightbox-info {
+                bottom: 15px;
+                font-size: 12px;
+                padding: 8px 16px;
+                max-width: calc(100% - 30px);
+            }
+            
+            .lightbox-content {
+                max-width: 100vw;
+                max-height: 100vh;
+                padding: 60px 15px 80px;
+            }
         }
         
-        /* ===== SCROLL ANIMATIONS ===== */
+        /* ===== TOUCH INTERACTIONS ===== */
+        @media (hover: none) and (pointer: coarse) {
+            .card:hover {
+                transform: none;
+                border-color: var(--border);
+            }
+            
+            .btn:hover {
+                transform: none;
+                background: var(--bg-2);
+                color: var(--text);
+                border-color: var(--border);
+            }
+            
+            .tile:hover {
+                transform: none;
+                border-color: var(--border);
+            }
+            
+            /* Active states for touch */
+            .btn:active {
+                transform: scale(0.98);
+                background: rgba(255,122,0,.1);
+                color: var(--orange);
+                border-color: var(--orange);
+            }
+            
+            .card:active {
+                transform: scale(0.98);
+            }
+            
+            .tile:active {
+                transform: scale(0.98);
+            }
+        }
+        
+        /* ===== HIGH DPI DISPLAYS ===== */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            /* Optimizations for retina displays */
+            .brand-logo svg {
+                image-rendering: -webkit-optimize-contrast;
+                image-rendering: crisp-edges;
+            }
+        }
+        
+        /* ===== REDUCED MOTION ===== */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .scroll-animate {
+                opacity: 1;
+                transform: none;
+            }
+        }
+        
+        /* ===== ANIMATIONS ===== */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -746,6 +1398,29 @@
             }
         }
         
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Scroll Animation Classes */
         .scroll-animate {
             opacity: 0;
             transform: translateY(30px);
@@ -756,6 +1431,54 @@
             opacity: 1;
             transform: translateY(0);
         }
+        
+        .scroll-animate-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.6s ease-out;
+        }
+        
+        .scroll-animate-left.animate-in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .scroll-animate-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.6s ease-out;
+        }
+        
+        .scroll-animate-right.animate-in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* Staggered animations for grid items */
+        .card {
+            transition: all 0.6s ease-out;
+        }
+        
+        .card:nth-child(1) { transition-delay: 0.1s; }
+        .card:nth-child(2) { transition-delay: 0.2s; }
+        .card:nth-child(3) { transition-delay: 0.3s; }
+        .card:nth-child(4) { transition-delay: 0.4s; }
+        .card:nth-child(5) { transition-delay: 0.5s; }
+        .card:nth-child(6) { transition-delay: 0.6s; }
+        
+        .tile {
+            transition: all 0.6s ease-out;
+        }
+        
+        .tile:nth-child(1) { transition-delay: 0.1s; }
+        .tile:nth-child(2) { transition-delay: 0.2s; }
+        .tile:nth-child(3) { transition-delay: 0.3s; }
+        .tile:nth-child(4) { transition-delay: 0.4s; }
+        .tile:nth-child(5) { transition-delay: 0.5s; }
+        .tile:nth-child(6) { transition-delay: 0.6s; }
+        .tile:nth-child(7) { transition-delay: 0.7s; }
+        .tile:nth-child(8) { transition-delay: 0.8s; }
+        .tile:nth-child(9) { transition-delay: 0.9s; }
         
         /* Hero section gets immediate animation */
         .hero-card, .hero h2, .hero p {
@@ -869,9 +1592,206 @@
                     <button class="tab" data-filter="comic-art" role="tab">Comic Art</button>
                 </div>
                 <div class="portfolio scroll-animate" id="portfolioGrid">
-                    <!-- Portfolio items would go here -->
-                    <div style="padding: 60px 20px; text-align: center; background: var(--card); border-radius: var(--radius); border: 1px solid var(--border);">
-                        <p style="color: var(--muted); margin: 0;">Portfolio-Galerie wird hier implementiert</p>
+                    <!-- Main category tiles -->
+                    <div class="tile category-tile scroll-animate" data-cat="streetphotography" data-category="streetphotography">
+                        <img 
+                            class="lazy-image category-main-image" 
+                            data-src="./images/streetphotography/main.jpg" 
+                            alt="Streetphotography - Main Image" 
+                            loading="lazy"
+                            width="400" 
+                            height="300"
+                        >
+                        <span class="label">Streetphotography</span>
+                        <div class="category-overlay">
+                            <div class="category-info">
+                                <h4>Streetphotography</h4>
+                                <p>Urban moments captured</p>
+                                <span class="view-gallery">Gallery ansehen →</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tile category-tile scroll-animate" data-cat="städtefotografie" data-category="städtefotografie">
+                        <img 
+                            class="lazy-image category-main-image" 
+                            data-src="./images/städtefotografie/main.jpg" 
+                            alt="Städtefotografie - Main Image" 
+                            loading="lazy"
+                            width="400" 
+                            height="300"
+                        >
+                        <span class="label">Städtefotografie</span>
+                        <div class="category-overlay">
+                            <div class="category-info">
+                                <h4>Städtefotografie</h4>
+                                <p>Architektur & Stadtlandschaften</p>
+                                <span class="view-gallery">Gallery ansehen →</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tile category-tile scroll-animate" data-cat="landscape" data-category="landscape">
+                        <img 
+                            class="lazy-image category-main-image" 
+                            data-src="./images/landscape/main.jpg" 
+                            alt="Landscape Photography - Main Image" 
+                            loading="lazy"
+                            width="400" 
+                            height="300"
+                        >
+                        <span class="label">Landscape Photography</span>
+                        <div class="category-overlay">
+                            <div class="category-info">
+                                <h4>Landscape Photography</h4>
+                                <p>Nature & outdoor scenes</p>
+                                <span class="view-gallery">Gallery ansehen →</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tile category-tile scroll-animate" data-cat="graffiti" data-category="graffiti">
+                        <img 
+                            class="lazy-image category-main-image" 
+                            data-src="./images/graffiti/main.jpg" 
+                            alt="Graffiti - Main Image" 
+                            loading="lazy"
+                            width="400" 
+                            height="300"
+                        >
+                        <span class="label">Graffiti</span>
+                        <div class="category-overlay">
+                            <div class="category-info">
+                                <h4>Graffiti</h4>
+                                <p>Street art & urban culture</p>
+                                <span class="view-gallery">Gallery ansehen →</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tile category-tile scroll-animate" data-cat="ai-portraits" data-category="ai-portraits">
+                        <img 
+                            class="lazy-image category-main-image" 
+                            data-src="./images/ai-portraits/main.jpg" 
+                            alt="AI Portraits - Main Image" 
+                            loading="lazy"
+                            width="400" 
+                            height="300"
+                        >
+                        <span class="label">AI Portraits</span>
+                        <div class="category-overlay">
+                            <div class="category-info">
+                                <h4>AI Portraits</h4>
+                                <p>Digital art & AI creations</p>
+                                <span class="view-gallery">Gallery ansehen →</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tile category-tile scroll-animate" data-cat="portraits" data-category="portraits">
+                        <img 
+                            class="lazy-image category-main-image" 
+                            data-src="./images/portraits/main.jpg" 
+                            alt="Portraits - Main Image" 
+                            loading="lazy"
+                            width="400" 
+                            height="300"
+                        >
+                        <span class="label">Portraits</span>
+                        <div class="category-overlay">
+                            <div class="category-info">
+                                <h4>Portraits</h4>
+                                <p>People & character studies</p>
+                                <span class="view-gallery">Gallery ansehen →</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tile category-tile scroll-animate" data-cat="event-photography" data-category="event-photography">
+                        <img 
+                            class="lazy-image category-main-image" 
+                            data-src="./images/event-photography/main.jpg" 
+                            alt="Event Photography - Main Image" 
+                            loading="lazy"
+                            width="400" 
+                            height="300"
+                        >
+                        <span class="label">Event Photography</span>
+                        <div class="category-overlay">
+                            <div class="category-info">
+                                <h4>Event Photography</h4>
+                                <p>Capturing memorable moments</p>
+                                <span class="view-gallery">Gallery ansehen →</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tile category-tile scroll-animate" data-cat="comic-art" data-category="comic-art">
+                        <img 
+                            class="lazy-image category-main-image" 
+                            data-src="./images/comic-art/main.jpg" 
+                            alt="Comic Art - Main Image" 
+                            loading="lazy"
+                            width="400" 
+                            height="300"
+                        >
+                        <span class="label">Comic Art</span>
+                        <div class="category-overlay">
+                            <div class="category-info">
+                                <h4>Comic Art</h4>
+                                <p>Illustrations & graphic design</p>
+                                <span class="view-gallery">Gallery ansehen →</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gallery Modal -->
+                <div class="gallery-modal" id="galleryModal">
+                    <div class="gallery-modal-content">
+                        <div class="gallery-header">
+                            <h3 id="galleryTitle">Category Gallery</h3>
+                            <button class="gallery-close" id="galleryClose">&times;</button>
+                        </div>
+                        <div class="gallery-grid" id="galleryGrid">
+                            <!-- Gallery images will be loaded here -->
+                        </div>
+                    </div>
+                    <div class="gallery-backdrop" id="galleryBackdrop"></div>
+                </div>
+                
+                <!-- Lightbox for full-screen image viewing -->
+                <div class="lightbox" id="lightbox">
+                    <div class="lightbox-content">
+                        <button class="lightbox-close" id="lightboxClose">&times;</button>
+                        <button class="lightbox-nav lightbox-prev" id="lightboxPrev">‹</button>
+                        <button class="lightbox-nav lightbox-next" id="lightboxNext">›</button>
+                        <img class="lightbox-image" id="lightboxImage" src="" alt="">
+                        <div class="lightbox-info" id="lightboxInfo">
+                            <span class="lightbox-counter" id="lightboxCounter">1 / 9</span>
+                            <span id="lightboxTitle">Image Title</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cookie Banner -->
+                <div class="cookie-banner" id="cookieBanner">
+                    <div class="cookie-content">
+                        <div class="cookie-info">
+                            <div class="cookie-icon">🍪</div>
+                            <div class="cookie-text">
+                                <h3>Cookies & Datenschutz</h3>
+                                <p>Wir verwenden technisch notwendige Cookies und Google Fonts für eine optimale Website-Erfahrung. Mit "Alle akzeptieren" stimmst du auch der Nutzung von Google Fonts zu.</p>
+                            </div>
+                        </div>
+                        <div class="cookie-actions">
+                            <button class="cookie-btn cookie-btn-essential" id="cookieEssential">Nur notwendige</button>
+                            <button class="cookie-btn cookie-btn-all" id="cookieAcceptAll">Alle akzeptieren</button>
+                        </div>
+                        <div class="cookie-links">
+                            <a href="datenschutz.html">Datenschutz</a> · 
+                            <a href="impressum.html">Impressum</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -950,98 +1870,29 @@
                 <p class="section-sub scroll-animate">Kurz sagen, worum's geht — ich melde mich fix.</p>
                 <div class="grid">
                     <div class="card scroll-animate">
-                        <!-- 
-                        ============================================
-                        BREVO INTEGRATION BEREICH
-                        ============================================
-                        Hier wird der Brevo-Code eingefügt, sobald er generiert wurde.
-                        
-                        ANLEITUNG FÜR INTEGRATION:
-                        1. Brevo-Formular erstellt? ✓
-                        2. HTML-Code aus Brevo kopiert? ✓
-                        3. Dann hier einfügen und das Fallback-Formular entfernen
-                        
-                        Der Code sollte etwa so aussehen:
-                        
-                        <script>
-                        (function(d,s,i,o,n){
-                            // Brevo-spezifischer Code
-                        })();
-                        </script>
-                        
-                        WICHTIG: Nach dem Einfügen die Klasse "brevo-form" 
-                        zum Container hinzufügen für korrektes Styling!
-                        ============================================
-                        -->
-                        
-                        <!-- FALLBACK FORMULAR (wird durch Brevo ersetzt) -->
-                        <form name="contact" method="post" action="#" netlify id="contactForm">
-                            <div class="form-group">
-                                <label for="name">Dein Name *</label>
-                                <input type="text" id="name" name="name" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="email">E-Mail *</label>
-                                <input type="email" id="email" name="email" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="type">Art des Shootings *</label>
-                                <select id="type" name="type" required>
+                        <form name="contact" method="post" action="#" netlify>
+                            <label>Dein Name<br><input type="text" name="name" required></label>
+                            <label>E-Mail<br><input type="email" name="email" required></label>
+                            <label>Art des Shootings<br>
+                                <select name="type" required>
                                     <option value="">Bitte wählen...</option>
                                     <option value="Streetportrait">Streetportrait</option>
                                     <option value="Event">Event & Lifestyle</option>
                                     <option value="Brand">Brand / Lookbook</option>
                                     <option value="Other">Sonstiges</option>
                                 </select>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="message">Nachricht</label>
-                                <textarea id="message" name="message" placeholder="Wann? Wo? Idee?"></textarea>
-                            </div>
-                            
-                            <div class="checkbox-group">
-                                <input type="checkbox" id="privacy" name="privacy" required>
-                                <label for="privacy">
-                                    Ich stimme zu, dass meine Angaben zur Kontaktaufnahme gespeichert werden. 
-                                    Weitere Informationen finden Sie in unserer 
-                                    <a href="datenschutz.html" style="color: var(--orange)">Datenschutzerklärung</a>.
-                                </label>
-                            </div>
-                            
-                            <button class="btn primary" type="submit" id="submitBtn">
-                                <span id="submitText">Nachricht senden</span>
-                            </button>
-                            
-                            <div class="form-success" id="formSuccess">
-                                ✅ Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet. Ich melde mich in der Regel binnen 24 Stunden bei Ihnen.
-                            </div>
-                            
-                            <div class="form-error" id="formError">
-                                ❌ Fehler beim Senden. Bitte versuchen Sie es erneut oder senden Sie eine E-Mail direkt an hallo@27awkward.de
-                            </div>
-                            
-                            <div class="helper">
-                                Hinweis: DSGVO-konform gehostet. Ihre Daten werden sicher übertragen und verarbeitet.
-                            </div>
+                            </label>
+                            <label>Nachricht<br><textarea name="message" placeholder="Wann? Wo? Idee?"></textarea></label>
+                            <label><input type="checkbox" required> Ich stimme zu, dass meine Angaben zur Kontaktaufnahme gespeichert werden.</label>
+                            <button class="btn primary" type="submit">Senden</button>
+                            <div class="helper">Hinweis: DSGVO-konform gehostet. Bei GitHub Pages + Netlify Forms oder STRATO Mail-Funktion.</div>
                         </form>
-                        
-                        <!-- Ende Fallback-Formular -->
                     </div>
                     <div class="card scroll-animate">
                         <h4>Impressum & Rechtliches</h4>
-                        <p class="muted">Alle rechtlichen Informationen finden Sie in unserem <a href="impressum.html" style="color: var(--orange)">Impressum</a> und unserer <a href="datenschutz.html" style="color: var(--orange)">Datenschutzerklärung</a>. Achten Sie auf Bildrechte & Model Releases.</p>
+                        <p class="muted">Platzhalter für Impressum/Datenschutz. Auf STRATO als eigene Seiten verlinkbar — oder hier kompakt. Achte auf Bildrechte & Model Releases.</p>
                         <h4 style="margin-top:14px">Direkter Draht</h4>
-                        <p class="muted">E-Mail: <a href="mailto:hallo@27awkward.de" style="color: var(--orange)">hallo@27awkward.de</a><br>Instagram: <a href="#" style="color: var(--orange)">@27awkward</a></p>
-                        
-                        <h4 style="margin-top:14px">Antwortzeiten</h4>
-                        <p class="muted">
-                            📧 E-Mail: binnen 24h<br>
-                            📱 Social Media: binnen 48h<br>
-                            🚨 Dringend: Anruf bevorzugt
-                        </p>
+                        <p class="muted">E-Mail: <a href="mailto:hallo@27awkward.de">hallo@27awkward.de</a><br>Instagram: <a href="#">@27awkward</a></p>
                     </div>
                 </div>
             </div>
@@ -1059,68 +1910,156 @@
         // Jahreszahl automatisch aktualisieren
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        // ===== ENHANCED FORM HANDLING =====
-        const contactForm = document.getElementById('contactForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const submitText = document.getElementById('submitText');
-        const formSuccess = document.getElementById('formSuccess');
-        const formError = document.getElementById('formError');
+        // ===== COOKIE BANNER FUNCTIONALITY =====
+        const COOKIE_CONSENT_KEY = 'cookieConsent';
+        const COOKIE_CONSENT_VERSION = '1.0';
 
-        if (contactForm) {
-            // Prevent zoom on iOS when focusing inputs
-            const inputs = contactForm.querySelectorAll('input, textarea, select');
-            inputs.forEach(input => {
-                input.addEventListener('focus', () => {
-                    if (window.innerWidth < 768) {
-                        document.querySelector('meta[name="viewport"]').setAttribute(
-                            'content', 
-                            'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
-                        );
-                    }
-                });
-                
-                input.addEventListener('blur', () => {
-                    if (window.innerWidth < 768) {
-                        document.querySelector('meta[name="viewport"]').setAttribute(
-                            'content', 
-                            'width=device-width, initial-scale=1.0, viewport-fit=cover'
-                        );
-                    }
-                });
-            });
-
-            // Enhanced form submission with better UX
-            contactForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Hide previous messages
-                formSuccess.style.display = 'none';
-                formError.style.display = 'none';
-                
-                // Update button state
-                submitBtn.disabled = true;
-                submitText.textContent = 'Wird gesendet...';
-                submitBtn.style.opacity = '0.7';
-                
-                // Simulate form submission (replace with Brevo/Netlify)
-                setTimeout(() => {
-                    // For demo - show success
-                    formSuccess.style.display = 'block';
-                    contactForm.reset();
-                    
-                    // Reset button
-                    submitBtn.disabled = false;
-                    submitText.textContent = 'Nachricht senden';
-                    submitBtn.style.opacity = '1';
-                    
-                    // Scroll to success message
-                    formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    
-                }, 2000);
-            });
+        function getCookieConsent() {
+            try {
+                const consent = localStorage.getItem(COOKIE_CONSENT_KEY);
+                return consent ? JSON.parse(consent) : null;
+            } catch (e) {
+                return null;
+            }
         }
 
+        function setCookieConsent(consent) {
+            try {
+                const consentData = {
+                    ...consent,
+                    version: COOKIE_CONSENT_VERSION,
+                    timestamp: new Date().toISOString()
+                };
+                localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(consentData));
+            } catch (e) {
+                console.warn('Could not save cookie consent');
+            }
+        }
+
+        function showCookieBanner() {
+            const banner = document.getElementById('cookieBanner');
+            if (banner) {
+                setTimeout(() => {
+                    banner.classList.add('show');
+                }, 1000); // Show after 1 second
+            }
+        }
+
+        function hideCookieBanner() {
+            const banner = document.getElementById('cookieBanner');
+            if (banner) {
+                banner.classList.remove('show');
+                setTimeout(() => {
+                    banner.classList.add('hidden');
+                }, 400);
+            }
+        }
+
+        function handleCookieConsent(acceptAll = false) {
+            const consent = {
+                essential: true,
+                googleFonts: acceptAll,
+                analytics: false, // For future use
+                marketing: false  // For future use
+            };
+
+            setCookieConsent(consent);
+            hideCookieBanner();
+
+            // Apply consent settings
+            applyCookieConsent(consent);
+        }
+
+        function applyCookieConsent(consent) {
+            // Google Fonts handling
+            if (consent.googleFonts) {
+                // Fonts are already loaded via <link> in head
+                console.log('Google Fonts: Accepted');
+            } else {
+                // For strict compliance, you could remove Google Fonts here
+                // and use system fonts instead
+                console.log('Google Fonts: Only essential cookies accepted');
+            }
+
+            // Future: Analytics handling
+            if (consent.analytics) {
+                console.log('Analytics: Accepted');
+                // Initialize Google Analytics or other tracking
+            }
+
+            // Future: Marketing handling  
+            if (consent.marketing) {
+                console.log('Marketing: Accepted');
+                // Initialize marketing pixels
+            }
+        }
+
+        function initializeCookieBanner() {
+            const existingConsent = getCookieConsent();
+            
+            if (existingConsent && existingConsent.version === COOKIE_CONSENT_VERSION) {
+                // User has already made a choice
+                applyCookieConsent(existingConsent);
+                hideCookieBanner();
+            } else {
+                // Show cookie banner
+                showCookieBanner();
+            }
+
+            // Event listeners
+            const acceptAllBtn = document.getElementById('cookieAcceptAll');
+            const essentialBtn = document.getElementById('cookieEssential');
+
+            if (acceptAllBtn) {
+                acceptAllBtn.addEventListener('click', () => {
+                    handleCookieConsent(true);
+                });
+            }
+
+            if (essentialBtn) {
+                essentialBtn.addEventListener('click', () => {
+                    handleCookieConsent(false);
+                });
+            }
+        }
+
+        // Initialize cookie banner when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeCookieBanner();
+        });
+
+        // ===== LAZY LOADING FOR IMAGES =====
+        const lazyImageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    const src = img.getAttribute('data-src');
+                    
+                    if (src) {
+                        img.src = src;
+                        img.classList.add('loaded');
+                        img.removeAttribute('data-src');
+                        
+                        // Add loading animation to parent
+                        const tile = img.closest('.tile');
+                        if (tile) {
+                            tile.classList.add('loading');
+                            img.onload = () => {
+                                tile.classList.remove('loading');
+                            };
+                        }
+                    }
+                    
+                    observer.unobserve(img);
+                }
+            });
+        }, {
+            rootMargin: '50px 0px',
+            threshold: 0.1
+        });
+
         // ===== SCROLL ANIMATIONS =====
+        // Intersection Observer für Scroll-Animationen
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -1130,20 +2069,544 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('animate-in');
+                    // Element nur einmal animieren
                     scrollObserver.unobserve(entry.target);
                 }
             });
         }, observerOptions);
 
-        // Initialize scroll animations
+        // ===== PERFORMANCE OPTIMIZATIONS =====
+        let ticking = false;
+        let scrollY = 0;
+
+        function updateScroll() {
+            scrollY = window.pageYOffset;
+            
+            // Leichter Parallax-Effekt für Hero-Section (nur auf Desktop)
+            if (window.innerWidth > 768) {
+                const heroCard = document.querySelector('.hero-card');
+                if (heroCard && scrollY < window.innerHeight) {
+                    heroCard.style.transform = `translateY(${scrollY * 0.05}px)`;
+                }
+            }
+            
+            ticking = false;
+        }
+
+        function requestScrollUpdate() {
+            if (!ticking) {
+                requestAnimationFrame(updateScroll);
+                ticking = true;
+            }
+        }
+
+        // ===== INITIALIZATION =====
         document.addEventListener('DOMContentLoaded', () => {
-            const animateElements = document.querySelectorAll('.scroll-animate');
+            // Initialize scroll animations
+            const animateElements = document.querySelectorAll('.scroll-animate, .scroll-animate-left, .scroll-animate-right');
             animateElements.forEach(el => {
                 scrollObserver.observe(el);
             });
+
+            // Initialize lazy loading
+            const lazyImages = document.querySelectorAll('.lazy-image[data-src]');
+            lazyImages.forEach(img => {
+                lazyImageObserver.observe(img);
+            });
+
+            // Add passive scroll listener for better performance
+            window.addEventListener('scroll', requestScrollUpdate, { passive: true });
         });
 
-        // ===== LANGUAGE TABS =====
+        // ===== PORTFOLIO FILTER WITH PERFORMANCE OPTIMIZATION =====
+        const tabs = document.querySelectorAll('.tab');
+        const tiles = document.querySelectorAll('.tile');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Aktiven Tab wechseln
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Filter anwenden mit verbesserter Performance
+                const filter = tab.dataset.filter;
+                const fragment = document.createDocumentFragment();
+                
+                tiles.forEach((tile, index) => {
+                    const shouldShow = filter === 'all' || tile.dataset.cat === filter;
+                    
+                    if (shouldShow) {
+                        tile.style.display = 'block';
+                        // Staggered re-animation when filtering
+                        tile.style.opacity = '0';
+                        tile.style.transform = 'translateY(20px)';
+                        
+                        setTimeout(() => {
+                            tile.style.opacity = '1';
+                            tile.style.transform = 'translateY(0)';
+                        }, index * 50);
+                    } else {
+                        tile.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // ===== GALLERY SYSTEM =====
+        const galleryData = {
+            'streetphotography': {
+                title: 'Streetphotography Gallery',
+                images: [
+                    { src: './images/streetphotography/main.jpg', alt: 'Streetphotography Main', isMain: true },
+                    { src: './images/streetphotography/1.jpg', alt: 'Street Photography 1' },
+                    { src: './images/streetphotography/2.jpg', alt: 'Street Photography 2' },
+                    { src: './images/streetphotography/3.jpg', alt: 'Street Photography 3' },
+                    { src: './images/streetphotography/4.jpg', alt: 'Street Photography 4' },
+                    { src: './images/streetphotography/5.jpg', alt: 'Street Photography 5' },
+                    { src: './images/streetphotography/6.jpg', alt: 'Street Photography 6' },
+                    { src: './images/streetphotography/7.jpg', alt: 'Street Photography 7' },
+                    { src: './images/streetphotography/8.jpg', alt: 'Street Photography 8' }
+                ]
+            },
+            'städtefotografie': {
+                title: 'Städtefotografie Gallery',
+                images: [
+                    { src: './images/städtefotografie/main.jpg', alt: 'Städtefotografie Main', isMain: true },
+                    { src: './images/städtefotografie/1.jpg', alt: 'Städtefotografie 1' },
+                    { src: './images/städtefotografie/2.jpg', alt: 'Städtefotografie 2' },
+                    { src: './images/städtefotografie/3.jpg', alt: 'Städtefotografie 3' },
+                    { src: './images/städtefotografie/4.jpg', alt: 'Städtefotografie 4' },
+                    { src: './images/städtefotografie/5.jpg', alt: 'Städtefotografie 5' },
+                    { src: './images/städtefotografie/6.jpg', alt: 'Städtefotografie 6' },
+                    { src: './images/städtefotografie/7.jpg', alt: 'Städtefotografie 7' },
+                    { src: './images/städtefotografie/8.jpg', alt: 'Städtefotografie 8' }
+                ]
+            },
+            'landscape': {
+                title: 'Landscape Photography Gallery',
+                images: [
+                    { src: './images/landscape/main.jpg', alt: 'Landscape Photography Main', isMain: true },
+                    { src: './images/landscape/1.jpg', alt: 'Landscape Photography 1' },
+                    { src: './images/landscape/2.jpg', alt: 'Landscape Photography 2' },
+                    { src: './images/landscape/3.jpg', alt: 'Landscape Photography 3' },
+                    { src: './images/landscape/4.jpg', alt: 'Landscape Photography 4' },
+                    { src: './images/landscape/5.jpg', alt: 'Landscape Photography 5' },
+                    { src: './images/landscape/6.jpg', alt: 'Landscape Photography 6' },
+                    { src: './images/landscape/7.jpg', alt: 'Landscape Photography 7' },
+                    { src: './images/landscape/8.jpg', alt: 'Landscape Photography 8' }
+                ]
+            },
+            'graffiti': {
+                title: 'Graffiti Gallery',
+                images: [
+                    { src: './images/graffiti/main.jpg', alt: 'Graffiti Main', isMain: true },
+                    { src: './images/graffiti/1.jpg', alt: 'Graffiti 1' },
+                    { src: './images/graffiti/2.jpg', alt: 'Graffiti 2' },
+                    { src: './images/graffiti/3.jpg', alt: 'Graffiti 3' },
+                    { src: './images/graffiti/4.jpg', alt: 'Graffiti 4' },
+                    { src: './images/graffiti/5.jpg', alt: 'Graffiti 5' },
+                    { src: './images/graffiti/6.jpg', alt: 'Graffiti 6' },
+                    { src: './images/graffiti/7.jpg', alt: 'Graffiti 7' },
+                    { src: './images/graffiti/8.jpg', alt: 'Graffiti 8' }
+                ]
+            },
+            'ai-portraits': {
+                title: 'AI Portraits Gallery',
+                images: [
+                    { src: './images/ai-portraits/main.jpg', alt: 'AI Portraits Main', isMain: true },
+                    { src: './images/ai-portraits/1.jpg', alt: 'AI Portrait 1' },
+                    { src: './images/ai-portraits/2.jpg', alt: 'AI Portrait 2' },
+                    { src: './images/ai-portraits/3.jpg', alt: 'AI Portrait 3' },
+                    { src: './images/ai-portraits/4.jpg', alt: 'AI Portrait 4' },
+                    { src: './images/ai-portraits/5.jpg', alt: 'AI Portrait 5' },
+                    { src: './images/ai-portraits/6.jpg', alt: 'AI Portrait 6' },
+                    { src: './images/ai-portraits/7.jpg', alt: 'AI Portrait 7' },
+                    { src: './images/ai-portraits/8.jpg', alt: 'AI Portrait 8' }
+                ]
+            },
+            'portraits': {
+                title: 'Portraits Gallery',
+                images: [
+                    { src: './images/portraits/main.jpg', alt: 'Portraits Main', isMain: true },
+                    { src: './images/portraits/1.jpg', alt: 'Portrait 1' },
+                    { src: './images/portraits/2.jpg', alt: 'Portrait 2' },
+                    { src: './images/portraits/3.jpg', alt: 'Portrait 3' },
+                    { src: './images/portraits/4.jpg', alt: 'Portrait 4' },
+                    { src: './images/portraits/5.jpg', alt: 'Portrait 5' },
+                    { src: './images/portraits/6.jpg', alt: 'Portrait 6' },
+                    { src: './images/portraits/7.jpg', alt: 'Portrait 7' },
+                    { src: './images/portraits/8.jpg', alt: 'Portrait 8' }
+                ]
+            },
+            'event-photography': {
+                title: 'Event Photography Gallery',
+                images: [
+                    { src: './images/event-photography/main.jpg', alt: 'Event Photography Main', isMain: true },
+                    { src: './images/event-photography/1.jpg', alt: 'Event Photography 1' },
+                    { src: './images/event-photography/2.jpg', alt: 'Event Photography 2' },
+                    { src: './images/event-photography/3.jpg', alt: 'Event Photography 3' },
+                    { src: './images/event-photography/4.jpg', alt: 'Event Photography 4' },
+                    { src: './images/event-photography/5.jpg', alt: 'Event Photography 5' },
+                    { src: './images/event-photography/6.jpg', alt: 'Event Photography 6' },
+                    { src: './images/event-photography/7.jpg', alt: 'Event Photography 7' },
+                    { src: './images/event-photography/8.jpg', alt: 'Event Photography 8' }
+                ]
+            },
+            'comic-art': {
+                title: 'Comic Art Gallery',
+                images: [
+                    { src: './images/comic-art/main.jpg', alt: 'Comic Art Main', isMain: true },
+                    { src: './images/comic-art/1.jpg', alt: 'Comic Art 1' },
+                    { src: './images/comic-art/2.jpg', alt: 'Comic Art 2' },
+                    { src: './images/comic-art/3.jpg', alt: 'Comic Art 3' },
+                    { src: './images/comic-art/4.jpg', alt: 'Comic Art 4' },
+                    { src: './images/comic-art/5.jpg', alt: 'Comic Art 5' },
+                    { src: './images/comic-art/6.jpg', alt: 'Comic Art 6' },
+                    { src: './images/comic-art/7.jpg', alt: 'Comic Art 7' },
+                    { src: './images/comic-art/8.jpg', alt: 'Comic Art 8' }
+                ]
+            }
+        };
+
+        function openGallery(category) {
+            const modal = document.getElementById('galleryModal');
+            const title = document.getElementById('galleryTitle');
+            const grid = document.getElementById('galleryGrid');
+            
+            if (!galleryData[category]) return;
+            
+            const data = galleryData[category];
+            title.textContent = data.title;
+            
+            // Clear existing content
+            grid.innerHTML = '';
+            
+            // Create gallery items
+            data.images.forEach((image, index) => {
+                const item = document.createElement('div');
+                item.className = `gallery-item ${image.isMain ? 'main-image' : ''}`;
+                item.dataset.imageIndex = index;
+                item.dataset.category = category;
+                
+                const img = document.createElement('img');
+                img.src = image.src;
+                img.alt = image.alt;
+                img.loading = 'lazy';
+                
+                item.appendChild(img);
+                grid.appendChild(item);
+                
+                // Add click handler for lightbox
+                item.addEventListener('click', () => {
+                    openLightbox(category, index);
+                });
+                
+                // Staggered animation
+                setTimeout(() => {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, index * 50);
+            });
+            
+            // Show modal
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // ===== LIGHTBOX FUNCTIONALITY =====
+        let currentLightboxCategory = null;
+        let currentLightboxIndex = 0;
+        
+        // Touch/Swipe variables
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+        let touchEndY = 0;
+        let isSwiping = false;
+        let swipeThreshold = 50; // Minimum distance for swipe
+        let swipeVerticalThreshold = 100; // Maximum vertical distance to allow horizontal swipe
+
+        function openLightbox(category, imageIndex) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightboxImage');
+            const lightboxTitle = document.getElementById('lightboxTitle');
+            const lightboxCounter = document.getElementById('lightboxCounter');
+            
+            if (!galleryData[category]) return;
+            
+            currentLightboxCategory = category;
+            currentLightboxIndex = imageIndex;
+            
+            const data = galleryData[category];
+            const image = data.images[imageIndex];
+            
+            // Set image and info
+            lightboxImage.src = image.src;
+            lightboxImage.alt = image.alt;
+            lightboxTitle.textContent = image.alt;
+            lightboxCounter.textContent = `${imageIndex + 1} / ${data.images.length}`;
+            
+            // Update navigation buttons
+            updateLightboxNavigation();
+            
+            // Show lightbox
+            lightbox.classList.add('active');
+            
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+            
+            currentLightboxCategory = null;
+            currentLightboxIndex = 0;
+        }
+
+        function navigateLightbox(direction) {
+            if (!currentLightboxCategory) return;
+            
+            const data = galleryData[currentLightboxCategory];
+            const newIndex = currentLightboxIndex + direction;
+            
+            if (newIndex >= 0 && newIndex < data.images.length) {
+                // Add slide animation
+                const lightboxImage = document.getElementById('lightboxImage');
+                lightboxImage.style.transform = `translateX(${direction > 0 ? '100px' : '-100px'})`;
+                lightboxImage.style.opacity = '0.5';
+                
+                setTimeout(() => {
+                    openLightbox(currentLightboxCategory, newIndex);
+                    lightboxImage.style.transform = 'translateX(0)';
+                    lightboxImage.style.opacity = '1';
+                }, 150);
+            }
+        }
+
+        function updateLightboxNavigation() {
+            if (!currentLightboxCategory) return;
+            
+            const data = galleryData[currentLightboxCategory];
+            const prevBtn = document.getElementById('lightboxPrev');
+            const nextBtn = document.getElementById('lightboxNext');
+            
+            // Update prev button
+            if (currentLightboxIndex <= 0) {
+                prevBtn.classList.add('disabled');
+            } else {
+                prevBtn.classList.remove('disabled');
+            }
+            
+            // Update next button
+            if (currentLightboxIndex >= data.images.length - 1) {
+                nextBtn.classList.add('disabled');
+            } else {
+                nextBtn.classList.remove('disabled');
+            }
+        }
+
+        // ===== TOUCH/SWIPE HANDLERS =====
+        function handleTouchStart(e) {
+            if (!document.getElementById('lightbox').classList.contains('active')) return;
+            
+            const touch = e.touches[0];
+            touchStartX = touch.clientX;
+            touchStartY = touch.clientY;
+            isSwiping = true;
+            
+            // Add visual feedback
+            const lightboxContent = document.querySelector('.lightbox-content');
+            lightboxContent.style.transition = 'none';
+        }
+
+        function handleTouchMove(e) {
+            if (!isSwiping || !document.getElementById('lightbox').classList.contains('active')) return;
+            
+            e.preventDefault(); // Prevent scrolling
+            
+            const touch = e.touches[0];
+            touchEndX = touch.clientX;
+            touchEndY = touch.clientY;
+            
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = Math.abs(touchEndY - touchStartY);
+            
+            // Only allow horizontal swipes (not too much vertical movement)
+            if (deltaY < swipeVerticalThreshold) {
+                const lightboxImage = document.getElementById('lightboxImage');
+                const opacity = 1 - Math.abs(deltaX) / 300;
+                
+                // Visual feedback during swipe
+                lightboxImage.style.transform = `translateX(${deltaX * 0.3}px)`;
+                lightboxImage.style.opacity = Math.max(0.3, opacity);
+            }
+        }
+
+        function handleTouchEnd(e) {
+            if (!isSwiping || !document.getElementById('lightbox').classList.contains('active')) return;
+            
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = Math.abs(touchEndY - touchStartY);
+            
+            // Reset visual feedback
+            const lightboxContent = document.querySelector('.lightbox-content');
+            const lightboxImage = document.getElementById('lightboxImage');
+            
+            lightboxContent.style.transition = '';
+            lightboxImage.style.transform = '';
+            lightboxImage.style.opacity = '';
+            
+            // Check if swipe is valid (horizontal and long enough)
+            if (deltaY < swipeVerticalThreshold && Math.abs(deltaX) > swipeThreshold) {
+                if (deltaX > 0) {
+                    // Swiped right - go to previous image
+                    if (!document.getElementById('lightboxPrev').classList.contains('disabled')) {
+                        navigateLightbox(-1);
+                    }
+                } else {
+                    // Swiped left - go to next image
+                    if (!document.getElementById('lightboxNext').classList.contains('disabled')) {
+                        navigateLightbox(1);
+                    }
+                }
+            }
+            
+            // Reset swipe variables
+            isSwiping = false;
+            touchStartX = 0;
+            touchStartY = 0;
+            touchEndX = 0;
+            touchEndY = 0;
+        }
+
+        // ===== PINCH TO ZOOM (Basic Implementation) =====
+        let initialPinchDistance = 0;
+        let currentScale = 1;
+
+        function getPinchDistance(e) {
+            const touch1 = e.touches[0];
+            const touch2 = e.touches[1];
+            return Math.sqrt(
+                Math.pow(touch2.clientX - touch1.clientX, 2) +
+                Math.pow(touch2.clientY - touch1.clientY, 2)
+            );
+        }
+
+        function handlePinchStart(e) {
+            if (e.touches.length === 2 && document.getElementById('lightbox').classList.contains('active')) {
+                initialPinchDistance = getPinchDistance(e);
+            }
+        }
+
+        function handlePinchMove(e) {
+            if (e.touches.length === 2 && document.getElementById('lightbox').classList.contains('active') && initialPinchDistance > 0) {
+                e.preventDefault();
+                
+                const currentDistance = getPinchDistance(e);
+                const scale = currentDistance / initialPinchDistance;
+                currentScale = Math.min(Math.max(scale, 0.5), 3); // Limit scale between 0.5x and 3x
+                
+                const lightboxImage = document.getElementById('lightboxImage');
+                lightboxImage.style.transform = `scale(${currentScale})`;
+            }
+        }
+
+        function handlePinchEnd(e) {
+            if (e.touches.length < 2) {
+                initialPinchDistance = 0;
+                
+                // Reset zoom if scale is close to 1
+                if (currentScale > 0.9 && currentScale < 1.1) {
+                    currentScale = 1;
+                    const lightboxImage = document.getElementById('lightboxImage');
+                    lightboxImage.style.transform = '';
+                    lightboxImage.style.transition = 'transform 0.3s ease';
+                    
+                    setTimeout(() => {
+                        lightboxImage.style.transition = '';
+                    }, 300);
+                }
+            }
+        }
+
+        function closeGallery() {
+            const modal = document.getElementById('galleryModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Add event listeners for category tiles
+        document.addEventListener('click', (e) => {
+            const categoryTile = e.target.closest('.category-tile');
+            if (categoryTile) {
+                e.preventDefault();
+                const category = categoryTile.dataset.category;
+                openGallery(category);
+            }
+        });
+
+        // Gallery close handlers
+        document.getElementById('galleryClose').addEventListener('click', closeGallery);
+        document.getElementById('galleryBackdrop').addEventListener('click', closeGallery);
+        
+        // Lightbox event listeners
+        document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+        document.getElementById('lightboxPrev').addEventListener('click', () => {
+            if (!document.getElementById('lightboxPrev').classList.contains('disabled')) {
+                navigateLightbox(-1);
+            }
+        });
+        document.getElementById('lightboxNext').addEventListener('click', () => {
+            if (!document.getElementById('lightboxNext').classList.contains('disabled')) {
+                navigateLightbox(1);
+            }
+        });
+
+        // Close lightbox when clicking on background
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target.id === 'lightbox') {
+                closeLightbox();
+            }
+        });
+
+        // Touch event listeners for swipe gestures
+        document.addEventListener('touchstart', handleTouchStart, { passive: false });
+        document.addEventListener('touchmove', handleTouchMove, { passive: false });
+        document.addEventListener('touchend', handleTouchEnd, { passive: false });
+
+        // Pinch zoom event listeners
+        document.addEventListener('touchstart', handlePinchStart, { passive: false });
+        document.addEventListener('touchmove', handlePinchMove, { passive: false });
+        document.addEventListener('touchend', handlePinchEnd, { passive: false });
+        
+        // Keyboard navigation for lightbox
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('lightbox').classList.contains('active')) {
+                switch(e.key) {
+                    case 'Escape':
+                        closeLightbox();
+                        break;
+                    case 'ArrowLeft':
+                        if (!document.getElementById('lightboxPrev').classList.contains('disabled')) {
+                            navigateLightbox(-1);
+                        }
+                        break;
+                    case 'ArrowRight':
+                        if (!document.getElementById('lightboxNext').classList.contains('disabled')) {
+                            navigateLightbox(1);
+                        }
+                        break;
+                }
+            } else if (document.getElementById('galleryModal').classList.contains('active')) {
+                if (e.key === 'Escape') {
+                    closeGallery();
+                }
+            }
+        });
+
+        // ===== LANGUAGE TABS WITH SMOOTH TRANSITIONS =====
         const langTabs = document.querySelectorAll('.lang-tab');
         const panels = document.querySelectorAll('.lang-panel');
         
@@ -1193,24 +2656,51 @@
             });
         });
 
-        // ===== PORTFOLIO TABS (SIMPLIFIED VERSION) =====
-        const tabs = document.querySelectorAll('.tab');
-        
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                // Aktiven Tab wechseln
-                tabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
+        // ===== FORM ENHANCEMENTS =====
+        const contactForm = document.querySelector('form[name="contact"]');
+        if (contactForm) {
+            // Prevent zoom on iOS when focusing inputs
+            const inputs = contactForm.querySelectorAll('input, textarea, select');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    if (window.innerWidth < 768) {
+                        document.querySelector('meta[name="viewport"]').setAttribute(
+                            'content', 
+                            'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
+                        );
+                    }
+                });
                 
-                // In vollständiger Version würde hier die Portfolio-Filterung stattfinden
-                console.log('Filter aktiviert:', tab.dataset.filter);
+                input.addEventListener('blur', () => {
+                    if (window.innerWidth < 768) {
+                        document.querySelector('meta[name="viewport"]').setAttribute(
+                            'content', 
+                            'width=device-width, initial-scale=1.0, viewport-fit=cover'
+                        );
+                    }
+                });
             });
-        });
 
-        // ===== PERFORMANCE OPTIMIZATIONS =====
+            contactForm.addEventListener('submit', function(e) {
+                // Basic form validation feedback
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                
+                submitBtn.textContent = 'Wird gesendet...';
+                submitBtn.disabled = true;
+                
+                // Re-enable after 3 seconds (in case of error)
+                setTimeout(() => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }, 3000);
+            });
+        }
+
+        // ===== TOUCH GESTURE ENHANCEMENTS =====
         if ('ontouchstart' in window) {
             // Add touch feedback for better mobile UX
-            const touchElements = document.querySelectorAll('.btn, .card, .tab, .lang-tab');
+            const touchElements = document.querySelectorAll('.btn, .card, .tile, .tab, .lang-tab');
             
             touchElements.forEach(element => {
                 element.addEventListener('touchstart', function() {
@@ -1223,6 +2713,28 @@
                     }, 150);
                 }, { passive: true });
             });
+        }
+
+        // ===== PRELOAD CRITICAL IMAGES =====
+        function preloadCriticalImages() {
+            const criticalImages = [
+                './images/street-1.jpg',
+                './images/city-1.jpg',
+                './images/graffiti-1.jpg'
+            ];
+
+            criticalImages.forEach(src => {
+                const link = document.createElement('link');
+                link.rel = 'preload';
+                link.as = 'image';
+                link.href = src;
+                document.head.appendChild(link);
+            });
+        }
+
+        // Preload only if user has fast connection
+        if ('connection' in navigator && navigator.connection.effectiveType === '4g') {
+            preloadCriticalImages();
         }
     </script>
 </body>
