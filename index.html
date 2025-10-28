@@ -1583,7 +1583,7 @@
                 <div class="tabs scroll-animate" role="tablist" aria-label="Portfolio Kategorien">
                     <button class="tab active" data-filter="all" role="tab" aria-selected="true">Alle</button>
                     <button class="tab" data-filter="streetphotography" role="tab">Streetphotography</button>
-                    <button class="tab" data-filter="städtefotografie" role="tab">Städtefotografie</button>
+                    <button class="tab" data-filter="city-photography" role="tab">City Photography</button>
                     <button class="tab" data-filter="landscape" role="tab">Landscape Photography</button>
                     <button class="tab" data-filter="graffiti" role="tab">Graffiti</button>
                     <button class="tab" data-filter="ai-portraits" role="tab">AI Portraits</button>
@@ -1612,19 +1612,19 @@
                         </div>
                     </div>
                     
-                    <div class="tile category-tile scroll-animate" data-cat="städtefotografie" data-category="städtefotografie">
+                    <div class="tile category-tile scroll-animate" data-cat="city-photography" data-category="city-photography">
                         <img 
                             class="lazy-image category-main-image" 
-                            data-src="./images/städtefotografie/main.webp" 
-                            alt="Städtefotografie - Main Image" 
+                            data-src="./images/city-photography/main.webp" 
+                            alt="City Photography - Main Image" 
                             loading="lazy"
                             width="400" 
                             height="300"
                         >
-                        <span class="label">Städtefotografie</span>
+                        <span class="label">City Photography</span>
                         <div class="category-overlay">
                             <div class="category-info">
-                                <h4>Städtefotografie</h4>
+                                <h4>City Photography</h4>
                                 <p>Architektur & Stadtlandschaften</p>
                                 <span class="view-gallery">Gallery ansehen →</span>
                             </div>
@@ -2168,18 +2168,18 @@
                     { src: './images/streetphotography/8.webp', alt: 'Street Photography 8' }
                 ]
             },
-            'städtefotografie': {
-                title: 'Städtefotografie Gallery',
+            'city-photography': {
+                title: 'City Photography Gallery',
                 images: [
-                    { src: './images/städtefotografie/main.webp', alt: 'Städtefotografie Main', isMain: true },
-                    { src: './images/städtefotografie/1.webp', alt: 'Städtefotografie 1' },
-                    { src: './images/städtefotografie/2.webp', alt: 'Städtefotografie 2' },
-                    { src: './images/städtefotografie/3.webp', alt: 'Städtefotografie 3' },
-                    { src: './images/städtefotografie/4.webp', alt: 'Städtefotografie 4' },
-                    { src: './images/städtefotografie/5.webp', alt: 'Städtefotografie 5' },
-                    { src: './images/städtefotografie/6.webp', alt: 'Städtefotografie 6' },
-                    { src: './images/städtefotografie/7.webp', alt: 'Städtefotografie 7' },
-                    { src: './images/städtefotografie/8.webp', alt: 'Städtefotografie 8' }
+                    { src: './images/city-photography/main.webp', alt: 'City Photography Main', isMain: true },
+                    { src: './images/city-photography/1.webp', alt: 'City Photography 1' },
+                    { src: './images/city-photography/2.webp', alt: 'City Photography 2' },
+                    { src: './images/city-photography/3.webp', alt: 'City Photography 3' },
+                    { src: './images/city-photography/4.webp', alt: 'City Photography 4' },
+                    { src: './images/city-photography/5.webp', alt: 'City Photography 5' },
+                    { src: './images/city-photography/6.webp', alt: 'City Photography 6' },
+                    { src: './images/city-photography/7.webp', alt: 'City Photography 7' },
+                    { src: './images/city-photography/8.webp', alt: 'City Photography 8' }
                 ]
             },
             'landscape': {
@@ -2372,13 +2372,29 @@
             const newIndex = currentLightboxIndex + direction;
             
             if (newIndex >= 0 && newIndex < data.images.length) {
-                // Add slide animation
+                currentLightboxIndex = newIndex;
+                
+                // Get elements
                 const lightboxImage = document.getElementById('lightboxImage');
+                const lightboxTitle = document.getElementById('lightboxTitle');
+                const lightboxCounter = document.getElementById('lightboxCounter');
+                const image = data.images[newIndex];
+                
+                // Add slide animation
                 lightboxImage.style.transform = `translateX(${direction > 0 ? '100px' : '-100px'})`;
                 lightboxImage.style.opacity = '0.5';
                 
                 setTimeout(() => {
-                    openLightbox(currentLightboxCategory, newIndex);
+                    // Update image and info without calling openLightbox
+                    lightboxImage.src = image.src;
+                    lightboxImage.alt = image.alt;
+                    lightboxTitle.textContent = image.alt;
+                    lightboxCounter.textContent = `${newIndex + 1} / ${data.images.length}`;
+                    
+                    // Update navigation buttons
+                    updateLightboxNavigation();
+                    
+                    // Reset animation
                     lightboxImage.style.transform = 'translateX(0)';
                     lightboxImage.style.opacity = '1';
                 }, 150);
@@ -2719,7 +2735,7 @@
         function preloadCriticalImages() {
             const criticalImages = [
                 './images/streetphotography/main.webp',
-                './images/städtefotografie/main.webp',
+                './images/city-photography/main.webp',
                 './images/graffiti/main.webp'
             ];
 
