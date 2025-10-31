@@ -7,383 +7,172 @@
     <meta name="description" content="Datenschutzerklärung und Informationen zum Umgang mit personenbezogenen Daten">
     <meta name="robots" content="noindex, nofollow">
     
-    <!-- Consistent styling with main site -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-        /* Shared CSS Variables */
         :root {
-            --orange: #ff7a00;
-            --bg: #0f0f10;
-            --bg-2: #141416;
-            --text: #f1f1f1;
-            --muted: #b5b7ba;
-            --card: #1a1b1e;
-            --border: #2a2b2f;
-            --radius: 18px;
-            --shadow: 0 10px 30px rgba(0,0,0,.35);
+            --orange:#ff7a00;--bg:#0f0f10;--bg-2:#141416;--text:#f1f1f1;
+            --muted:#b5b7ba;--card:#1a1b1e;--border:#2a2b2f;
+            --radius:18px;--shadow:0 10px 30px rgba(0,0,0,.35);
         }
-        
-        * {
-            box-sizing: border-box;
-        }
-        
-        html, body {
-            margin: 0;
-            padding: 0;
-            background: var(--bg);
-            color: var(--text);
-            font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
-            line-height: 1.6;
-            scroll-behavior: smooth;
-        }
-        
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header */
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            background: rgba(15,15,16,.9);
-            backdrop-filter: saturate(110%) blur(8px);
-            border-bottom: 1px solid var(--border);
-        }
-        
-        .nav {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 14px 0;
-        }
-        
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-        
-        .brand-logo {
-            width: 42px;
-            height: 42px;
-            border-radius: 10px;
-            background: var(--card);
-            border: 1px solid var(--border);
-            display: grid;
-            place-items: center;
-        }
-        
-        .brand h1 {
-            margin: 0;
-            font-size: 18px;
-            font-weight: 800;
-            letter-spacing: .3px;
-        }
-        
-        .tagline {
-            font-size: 12px;
-            color: var(--muted);
-        }
-        
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 14px;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            background: linear-gradient(180deg, var(--card), #121215);
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.2s ease;
-        }
-        
-        .back-link:hover {
-            border-color: var(--orange);
-            background: rgba(255,122,0,.1);
-            color: var(--orange);
-        }
-        
-        /* Main Content */
-        main {
-            padding: 60px 0;
-        }
-        
-        .legal-card {
-            background: linear-gradient(180deg, var(--card), #121215);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 40px;
-            box-shadow: var(--shadow);
-            margin-bottom: 30px;
-        }
-        
-        h1 {
-            font-size: 32px;
-            margin: 0 0 30px;
-            color: var(--orange);
-            font-weight: 800;
-        }
-        
-        h2 {
-            font-size: 24px;
-            margin: 30px 0 15px;
-            color: var(--text);
-            font-weight: 700;
-        }
-        
-        h3 {
-            font-size: 18px;
-            margin: 25px 0 10px;
-            color: var(--orange);
-            font-weight: 600;
-        }
-        
-        p {
-            margin: 0 0 15px;
-            color: var(--muted);
-        }
-        
-        ul, ol {
-            color: var(--muted);
-            margin: 0 0 15px;
-            padding-left: 20px;
-        }
-        
-        li {
-            margin-bottom: 8px;
-        }
-        
-        a {
-            color: var(--orange);
-            text-decoration: none;
-        }
-        
-        a:hover {
-            text-decoration: underline;
-        }
-        
-        .highlight {
-            background: rgba(255,122,0,.1);
-            padding: 20px;
-            border-radius: 12px;
-            border-left: 4px solid var(--orange);
-            margin: 20px 0;
-        }
-        
-        .highlight p {
-            margin-bottom: 0;
-        }
-        
-        .data-table {
-            background: var(--bg-2);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-        
-        .data-table h4 {
-            color: var(--orange);
-            margin: 0 0 10px;
-            font-size: 16px;
-        }
-        
-        /* Footer */
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 24px 0;
-            color: var(--muted);
-            text-align: center;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .legal-card {
-                padding: 24px;
-            }
-            
-            h1 {
-                font-size: 28px;
-            }
-            
-            .container {
-                padding: 0 16px;
-            }
-        }
+        *{box-sizing:border-box}
+        html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+            font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+            line-height:1.6;scroll-behavior:smooth}
+        .container{max-width:800px;margin:0 auto;padding:0 20px}
+        header{position:sticky;top:0;z-index:50;background:rgba(15,15,16,.9);
+            backdrop-filter:saturate(110%) blur(8px);border-bottom:1px solid var(--border)}
+        .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+        .brand{display:flex;align-items:center;gap:14px}
+        .brand-logo{width:42px;height:42px;border-radius:10px;background:var(--card);
+            border:1px solid var(--border);display:grid;place-items:center}
+        .brand h1{margin:0;font-size:18px;font-weight:800;letter-spacing:.3px}
+        .tagline{font-size:12px;color:var(--muted)}
+        .back-link{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;
+            border:1px solid var(--border);border-radius:12px;
+            background:linear-gradient(180deg,var(--card),#121215);
+            color:var(--text);text-decoration:none;font-weight:600;transition:.2s}
+        .back-link:hover{border-color:var(--orange);background:rgba(255,122,0,.1);color:var(--orange)}
+        main{padding:60px 0}
+        .legal-card{background:linear-gradient(180deg,var(--card),#121215);
+            border:1px solid var(--border);border-radius:var(--radius);
+            padding:40px;box-shadow:var(--shadow);margin-bottom:30px}
+        h1{font-size:32px;margin:0 0 30px;color:var(--orange);font-weight:800}
+        h2{font-size:24px;margin:30px 0 15px;color:var(--text);font-weight:700}
+        h3{font-size:18px;margin:25px 0 10px;color:var(--orange);font-weight:600}
+        p{margin:0 0 15px;color:var(--muted)}
+        ul,ol{color:var(--muted);margin:0 0 15px;padding-left:20px}
+        li{margin-bottom:8px}
+        a{color:var(--orange);text-decoration:none}
+        a:hover{text-decoration:underline}
+        .data-table{background:var(--bg-2);border:1px solid var(--border);
+            border-radius:12px;padding:20px;margin:20px 0}
+        footer{border-top:1px solid var(--border);padding:24px 0;color:var(--muted);text-align:center}
+        @media(max-width:768px){.legal-card{padding:24px}h1{font-size:28px}.container{padding:0 16px}}
     </style>
 </head>
 <body>
-    <header>
-        <div class="container nav">
-            <div class="brand">
-                <div class="brand-logo" aria-label="27awkward photoz logo">
-                    <svg viewBox="0 0 80 80" width="32" height="32" aria-hidden="true">
-                        <rect x="6" y="6" width="68" height="68" rx="14" fill="var(--orange)"/>
-                        <text x="40" y="47" text-anchor="middle" font-size="28" font-weight="900" fill="#111">27</text>
-                    </svg>
-                </div>
-                <div>
-                    <h1>27awkward photoz</h1>
-                    <div class="tagline">#urban #unkonventionell #bodenständig</div>
-                </div>
+<header>
+    <div class="container nav">
+        <div class="brand">
+            <div class="brand-logo" aria-label="27awkward photoz logo">
+                <svg viewBox="0 0 80 80" width="32" height="32" aria-hidden="true">
+                    <rect x="6" y="6" width="68" height="68" rx="14" fill="var(--orange)"/>
+                    <text x="40" y="47" text-anchor="middle" font-size="28" font-weight="900" fill="#111">27</text>
+                </svg>
             </div>
-            <a href="index.html" class="back-link">← Zurück zur Hauptseite</a>
-        </div>
-    </header>
-
-    <main>
-        <div class="container">
-            <div class="legal-card">
-                <h1>Datenschutzerklärung</h1>
-                
-                <div class="highlight">
-                    <p><strong>Hinweis:</strong> Diese Datenschutzerklärung ist eine Vorlage und muss an Ihre spezifischen Gegebenheiten angepasst werden. Bitte lassen Sie diese von einem Rechtsanwalt überprüfen.</p>
-                </div>
-
-                <h2>1. Datenschutz auf einen Blick</h2>
-                
-                <h3>Allgemeine Hinweise</h3>
-                <p>
-                    Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können. Ausführliche Informationen zum Thema Datenschutz entnehmen Sie unserer unter diesem Text aufgeführten Datenschutzerklärung.
-                </p>
-
-                <h3>Datenerfassung auf dieser Website</h3>
-                <p><strong>Wer ist verantwortlich für die Datenerfassung auf dieser Website?</strong></p>
-                <p>
-                    Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Dessen Kontaktdaten können Sie dem Abschnitt „Hinweis zur Verantwortlichen Stelle" in dieser Datenschutzerklärung entnehmen.
-                </p>
-
-                <p><strong>Wie erfassen wir Ihre Daten?</strong></p>
-                <p>
-                    Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen. Hierbei kann es sich z.B. um Daten handeln, die Sie in ein Kontaktformular eingeben.
-                </p>
-                <p>
-                    Andere Daten werden automatisch oder nach Ihrer Einwilligung beim Besuch der Website durch unsere IT-Systeme erfasst. Das sind vor allem technische Daten (z.B. Internetbrowser, Betriebssystem oder Uhrzeit des Seitenaufrufs). Die Erfassung dieser Daten erfolgt automatisch, sobald Sie diese Website betreten.
-                </p>
-
-                <h2>2. Hosting</h2>
-                
-                <h3>GitHub Pages</h3>
-                <p>
-                    Wir hosten unsere Website bei GitHub Pages. Anbieter ist die GitHub Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA (nachfolgend „GitHub").
-                </p>
-                <p>
-                    Wenn Sie unsere Website besuchen, erfasst GitHub verschiedene Logfiles inklusive Ihrer IP-Adressen. Details entnehmen Sie der Datenschutzerklärung von GitHub: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" target="_blank" rel="noopener">https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement</a>.
-                </p>
-                <p>
-                    Die Verwendung von GitHub Pages erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Wir haben ein berechtigtes Interesse an einer möglichst zuverlässigen Darstellung unserer Website.
-                </p>
-
-                <h2>3. Allgemeine Hinweise und Pflicht­informationen</h2>
-
-                <h3>Datenschutz</h3>
-                <p>
-                    Die Betreiber dieser Seiten nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend den gesetzlichen Datenschutzbestimmungen sowie dieser Datenschutzerklärung.
-                </p>
-
-                <h3>Hinweis zur verantwortlichen Stelle</h3>
-                <p>Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:</p>
-                <div class="data-table">
-                    <p>
-                        <strong>[Ihr vollständiger Name]</strong><br>
-                        [Straße und Hausnummer]<br>
-                        [PLZ] [Ort]<br>
-                        Deutschland
-                    </p>
-                    <p>
-                        Telefon: [Ihre Telefonnummer]<br>
-                        E-Mail: <a href="mailto:hallo@27awkward.de">hallo@27awkward.de</a>
-                    </p>
-                </div>
-
-                <h3>Speicherdauer</h3>
-                <p>
-                    Soweit innerhalb dieser Datenschutzerklärung keine speziellere Speicherdauer genannt wurde, verbleiben Ihre personenbezogenen Daten bei uns, bis der Zweck für die Datenverarbeitung entfällt. Wenn Sie ein berechtigtes Löschersuchen geltend machen oder eine Einwilligung zur Datenverarbeitung widerrufen, werden Ihre Daten gelöscht, sofern wir keine anderen rechtlich zulässigen Gründe für die Speicherung Ihrer personenbezogenen Daten haben.
-                </p>
-
-                <h3>Ihre Rechte</h3>
-                <p>Sie haben unter den gegebenen Voraussetzungen das Recht:</p>
-                <ul>
-                    <li>gemäß Art. 15 DSGVO Auskunft über Ihre von uns verarbeiteten personenbezogenen Daten zu verlangen;</li>
-                    <li>gemäß Art. 16 DSGVO unverzüglich die Berichtigung unrichtiger oder Vervollständigung Ihrer bei uns gespeicherten personenbezogenen Daten zu verlangen;</li>
-                    <li>gemäß Art. 17 DSGVO die Löschung Ihrer bei uns gespeicherten personenbezogenen Daten zu verlangen;</li>
-                    <li>gemäß Art. 18 DSGVO die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen;</li>
-                    <li>gemäß Art. 20 DSGVO Ihre personenbezogenen Daten in einem strukturierten, gängigen und maschinenlesbaren Format zu erhalten;</li>
-                    <li>gemäß Art. 7 Abs. 3 DSGVO Ihre einmal erteilte Einwilligung jederzeit gegenüber uns zu widerrufen.</li>
-                </ul>
-
-                <h2>4. Datenerfassung auf dieser Website</h2>
-
-                <h3>Server-Log-Dateien</h3>
-                <p>
-                    Der Provider der Seiten erhebt und speichert automatisch Informationen in so genannten Server-Log-Dateien, die Ihr Browser automatisch an uns übermittelt. Dies sind:
-                </p>
-                <ul>
-                    <li>Browsertyp und Browserversion</li>
-                    <li>verwendetes Betriebssystem</li>
-                    <li>Referrer URL</li>
-                    <li>Hostname des zugreifenden Rechners</li>
-                    <li>Uhrzeit der Serveranfrage</li>
-                    <li>IP-Adresse</li>
-                </ul>
-                <p>
-                    Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen. Die Erfassung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO.
-                </p>
-
-                <h3>Kontaktformular</h3>
-                <p>
-                    Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.
-                </p>
-                <p>
-                    Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, sofern Ihre Anfrage mit der Erfüllung eines Vertrags zusammenhängt oder zur Durchführung vorvertraglicher Maßnahmen erforderlich ist. In allen übrigen Fällen beruht die Verarbeitung auf unserem berechtigten Interesse an der effektiven Bearbeitung der an uns gerichteten Anfragen (Art. 6 Abs. 1 lit. f DSGVO).
-                </p>
-
-                <h2>5. Fotografie und Model Releases</h2>
-
-                <h3>Verwendung von Personenfotos</h3>
-                <p>
-                    Für alle auf dieser Website gezeigten Personenfotos liegen entsprechende Model Releases vor. Die abgebildeten Personen haben der Verwendung und Veröffentlichung ihrer Bilder ausdrücklich zugestimmt.
-                </p>
-
-                <h3>Auftragsarbeiten</h3>
-                <p>
-                    Bei Auftragsarbeiten (Fotoshootings) werden personenbezogene Daten nur zur Durchführung des Auftrags verarbeitet. Eine Weitergabe an Dritte erfolgt nur mit ausdrücklicher Einwilligung oder wenn dies zur Vertragserfüllung erforderlich ist.
-                </p>
-
-                <h2>6. Cookies</h2>
-                <p>
-                    Diese Website verwendet keine Cookies für Tracking oder Analyse. Technisch notwendige Cookies können verwendet werden, um die Funktionalität der Website sicherzustellen.
-                </p>
-
-                <h2>7. Widerspruch gegen Werbe-E-Mails</h2>
-                <p>
-                    Der Nutzung von im Rahmen der Impressumspflicht veröffentlichten Kontaktdaten zur Übersendung von nicht ausdrücklich angeforderter Werbung und Informationsmaterialien wird hiermit widersprochen. Die Betreiber der Seiten behalten sich ausdrücklich rechtliche Schritte im Falle der unverlangten Zusendung von Werbeinformationen vor.
-                </p>
-
-                <p><strong>Stand:</strong> <span id="date"></span></p>
+            <div>
+                <h1>27awkward photoz</h1>
+                <div class="tagline">#urban #unkonventionell #bodenständig</div>
             </div>
         </div>
-    </main>
+        <a href="index.html" class="back-link">← Zurück zur Hauptseite</a>
+    </div>
+</header>
 
-    <footer>
-        <div class="container">
-            <p>© <span id="year"></span> 27awkward photoz · 
-            <a href="impressum.html">Impressum</a> · 
-            <a href="agb.html">AGB</a></p>
+<main>
+    <div class="container">
+        <div class="legal-card">
+            <h1>Datenschutzerklärung</h1>
+
+            <h2>1. Datenschutz auf einen Blick</h2>
+            <h3>Allgemeine Hinweise</h3>
+            <p>
+                Die folgenden Hinweise geben einen Überblick, was mit personenbezogenen Daten passiert,
+                wenn du diese Website besuchst. Personenbezogene Daten sind Daten, mit denen du persönlich
+                identifiziert werden kannst.
+            </p>
+
+            <h3>Datenerfassung auf dieser Website</h3>
+            <p><strong>Verantwortlich für die Datenverarbeitung</strong></p>
+            <p>
+                Die Verarbeitung erfolgt durch den Websitebetreiber:
+            </p>
+            <div class="data-table">
+                <p>
+                    <strong>Dale Damerau</strong><br>
+                    Postfachnummer: 65&nbsp;21&nbsp;36<br>
+                    13316&nbsp;Berlin<br>
+                    Deutschland<br>
+                    E-Mail: <a href="mailto:hallo@27awkward.de">hallo@27awkward.de</a>
+                </p>
+            </div>
+
+            <h2>2. Hosting</h2>
+            <h3>GitHub Pages</h3>
+            <p>
+                Gehostet wird diese Website bei GitHub Pages, GitHub Inc., 88 Colin P Kelly Jr St,
+                San Francisco, CA 94107, USA.
+                Beim Aufruf werden Logfiles inkl. IP-Adresse verarbeitet.
+                Datenschutzerklärung: 
+                <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" target="_blank" rel="noopener">
+                    github.com / privacy-statement
+                </a>.
+            </p>
+
+            <h2>3. Rechte der betroffenen Person</h2>
+            <ul>
+                <li>Auskunft (Art. 15 DSGVO)</li>
+                <li>Berichtigung (Art. 16 DSGVO)</li>
+                <li>Löschung (Art. 17 DSGVO)</li>
+                <li>Einschränkung (Art. 18 DSGVO)</li>
+                <li>Datenübertragbarkeit (Art. 20 DSGVO)</li>
+                <li>Widerruf einer Einwilligung (Art. 7 Abs. 3 DSGVO)</li>
+                <li>Beschwerde bei einer Aufsichtsbehörde (Art. 77 DSGVO)</li>
+            </ul>
+
+            <h2>4. Datenerfassung</h2>
+            <h3>Server-Log-Dateien</h3>
+            <p>
+                Der Provider erhebt automatisch Daten wie Browsertyp, Betriebssystem, Referrer-URL,
+                Hostname, Zeitpunkt des Zugriffs und IP-Adresse. Grundlage ist Art. 6 Abs. 1 lit. f DSGVO.
+            </p>
+
+            <h3>Kontaktaufnahme</h3>
+            <p>
+                Bei Kontakt per E-Mail werden die Angaben zwecks Bearbeitung gespeichert.
+                Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Vertrag/Voranfrage) bzw. lit. f DSGVO
+                (berechtigtes Interesse).
+            </p>
+
+            <h2>5. Fotografie & Model Releases</h2>
+            <p>
+                Für veröffentlichte Personenfotos liegen Einwilligungen der Abgebildeten vor.
+                Auftragsbezogene Daten werden ausschließlich zur Vertragserfüllung genutzt und nicht
+                ohne Einwilligung weitergegeben.
+            </p>
+
+            <h2>6. Cookies</h2>
+            <p>
+                Diese Website setzt keine Tracking-Cookies ein. Es können technisch notwendige
+                Session-Cookies verwendet werden, um Grundfunktionen bereitzustellen.
+            </p>
+
+            <h2>7. Widerspruch gegen Werbe-E-Mails</h2>
+            <p>
+                Der Nutzung der im Impressum veröffentlichten Kontaktdaten zur Übersendung
+                nicht angeforderter Werbung wird widersprochen. Bei Zuwiderhandlung behalten wir uns
+                rechtliche Schritte vor.
+            </p>
+
+            <p><strong>Stand:</strong> <span id="date"></span></p>
         </div>
-    </footer>
+    </div>
+</main>
 
-    <script>
-        document.getElementById('year').textContent = new Date().getFullYear();
-        document.getElementById('date').textContent = new Date().toLocaleDateString('de-DE');
-    </script>
+<footer>
+    <div class="container">
+        <p>© <span id="year"></span> 27awkward photoz · 
+        <a href="impressum.html">Impressum</a> · 
+        <a href="agb.html">AGB</a></p>
+    </div>
+</footer>
+
+<script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('date').textContent = new Date().toLocaleDateString('de-DE');
+</script>
 </body>
 </html>

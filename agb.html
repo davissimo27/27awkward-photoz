@@ -13,7 +13,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-        /* Shared CSS Variables */
         :root {
             --orange: #ff7a00;
             --bg: #0f0f10;
@@ -25,11 +24,7 @@
             --radius: 18px;
             --shadow: 0 10px 30px rgba(0,0,0,.35);
         }
-        
-        * {
-            box-sizing: border-box;
-        }
-        
+        * { box-sizing: border-box; }
         html, body {
             margin: 0;
             padding: 0;
@@ -39,14 +34,7 @@
             line-height: 1.6;
             scroll-behavior: smooth;
         }
-        
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header */
+        .container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
         header {
             position: sticky;
             top: 0;
@@ -55,67 +43,24 @@
             backdrop-filter: saturate(110%) blur(8px);
             border-bottom: 1px solid var(--border);
         }
-        
-        .nav {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 14px 0;
-        }
-        
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-        
+        .nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+        .brand { display: flex; align-items: center; gap: 14px; }
         .brand-logo {
-            width: 42px;
-            height: 42px;
-            border-radius: 10px;
-            background: var(--card);
-            border: 1px solid var(--border);
-            display: grid;
-            place-items: center;
+            width: 42px; height: 42px; border-radius: 10px;
+            background: var(--card); border: 1px solid var(--border);
+            display: grid; place-items: center;
         }
-        
-        .brand h1 {
-            margin: 0;
-            font-size: 18px;
-            font-weight: 800;
-            letter-spacing: .3px;
-        }
-        
-        .tagline {
-            font-size: 12px;
-            color: var(--muted);
-        }
-        
+        .brand h1 { margin: 0; font-size: 18px; font-weight: 800; letter-spacing: .3px; }
+        .tagline { font-size: 12px; color: var(--muted); }
         .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 14px;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            background: linear-gradient(180deg, var(--card), #121215);
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 600;
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 14px; border: 1px solid var(--border);
+            border-radius: 12px; background: linear-gradient(180deg, var(--card), #121215);
+            color: var(--text); text-decoration: none; font-weight: 600;
             transition: all 0.2s ease;
         }
-        
-        .back-link:hover {
-            border-color: var(--orange);
-            background: rgba(255,122,0,.1);
-            color: var(--orange);
-        }
-        
-        /* Main Content */
-        main {
-            padding: 60px 0;
-        }
-        
+        .back-link:hover { border-color: var(--orange); background: rgba(255,122,0,.1); color: var(--orange); }
+        main { padding: 60px 0; }
         .legal-card {
             background: linear-gradient(180deg, var(--card), #121215);
             border: 1px solid var(--border);
@@ -124,64 +69,14 @@
             box-shadow: var(--shadow);
             margin-bottom: 30px;
         }
-        
-        h1 {
-            font-size: 32px;
-            margin: 0 0 30px;
-            color: var(--orange);
-            font-weight: 800;
-        }
-        
-        h2 {
-            font-size: 24px;
-            margin: 30px 0 15px;
-            color: var(--text);
-            font-weight: 700;
-        }
-        
-        h3 {
-            font-size: 18px;
-            margin: 25px 0 10px;
-            color: var(--orange);
-            font-weight: 600;
-        }
-        
-        p {
-            margin: 0 0 15px;
-            color: var(--muted);
-        }
-        
-        ul, ol {
-            color: var(--muted);
-            margin: 0 0 15px;
-            padding-left: 20px;
-        }
-        
-        li {
-            margin-bottom: 8px;
-        }
-        
-        a {
-            color: var(--orange);
-            text-decoration: none;
-        }
-        
-        a:hover {
-            text-decoration: underline;
-        }
-        
-        .highlight {
-            background: rgba(255,122,0,.1);
-            padding: 20px;
-            border-radius: 12px;
-            border-left: 4px solid var(--orange);
-            margin: 20px 0;
-        }
-        
-        .highlight p {
-            margin-bottom: 0;
-        }
-        
+        h1 { font-size: 32px; margin: 0 0 30px; color: var(--orange); font-weight: 800; }
+        h2 { font-size: 24px; margin: 30px 0 15px; color: var(--text); font-weight: 700; }
+        h3 { font-size: 18px; margin: 25px 0 10px; color: var(--orange); font-weight: 600; }
+        p { margin: 0 0 15px; color: var(--muted); }
+        ul, ol { color: var(--muted); margin: 0 0 15px; padding-left: 20px; }
+        li { margin-bottom: 8px; }
+        a { color: var(--orange); text-decoration: none; }
+        a:hover { text-decoration: underline; }
         .price-table {
             background: var(--bg-2);
             border: 1px solid var(--border);
@@ -189,61 +84,25 @@
             padding: 20px;
             margin: 20px 0;
         }
-        
-        .price-table h4 {
-            color: var(--orange);
-            margin: 0 0 15px;
-            font-size: 16px;
-        }
-        
+        .price-table h4 { color: var(--orange); margin: 0 0 15px; font-size: 16px; }
         .price-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 0; border-bottom: 1px solid var(--border);
         }
-        
-        .price-item:last-child {
-            border-bottom: none;
-        }
-        
-        .price-name {
-            font-weight: 600;
-        }
-        
-        .price-amount {
-            color: var(--orange);
-            font-weight: 700;
-        }
-        
-        /* Footer */
+        .price-item:last-child { border-bottom: none; }
+        .price-name { font-weight: 600; }
+        .price-amount { color: var(--orange); font-weight: 700; }
         footer {
             border-top: 1px solid var(--border);
             padding: 24px 0;
             color: var(--muted);
             text-align: center;
         }
-        
-        /* Responsive */
         @media (max-width: 768px) {
-            .legal-card {
-                padding: 24px;
-            }
-            
-            h1 {
-                font-size: 28px;
-            }
-            
-            .container {
-                padding: 0 16px;
-            }
-            
-            .price-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 5px;
-            }
+            .legal-card { padding: 24px; }
+            h1 { font-size: 28px; }
+            .container { padding: 0 16px; }
+            .price-item { flex-direction: column; align-items: flex-start; gap: 5px; }
         }
     </style>
 </head>
@@ -270,26 +129,33 @@
         <div class="container">
             <div class="legal-card">
                 <h1>Allgemeine Geschäftsbedingungen (AGB)</h1>
-                
-                <div class="highlight">
-                    <p><strong>Hinweis:</strong> Diese AGB sind eine Vorlage für Fotografie-Dienstleistungen und müssen an Ihre spezifischen Geschäftspraktiken angepasst werden. Bitte lassen Sie diese von einem Rechtsanwalt überprüfen.</p>
-                </div>
+
+                <p><strong>Anbieter:</strong><br>
+                Dale Damerau<br>
+                Postfachnummer: 65 21 36<br>
+                13316 Berlin<br>
+                Deutschland<br>
+                E-Mail: <a href="mailto:info@27awkwardphotoz.de">info@27awkwardphotoz.de</a></p>
 
                 <h2>§ 1 Geltungsbereich</h2>
                 <p>
-                    Diese Allgemeinen Geschäftsbedingungen gelten für alle Verträge zwischen 27awkward photoz (nachfolgend „Fotograf") und dem Auftraggeber über fotografische Leistungen, einschließlich der Übertragung von Nutzungsrechten an den erstellten Lichtbildern.
+                    Diese Allgemeinen Geschäftsbedingungen gelten für alle Verträge zwischen 27awkward photoz
+                    (nachfolgend „Fotograf“) und dem Auftraggeber über fotografische Leistungen, einschließlich
+                    der Übertragung von Nutzungsrechten an den erstellten Lichtbildern.
                 </p>
                 <p>
-                    Abweichende Bedingungen des Auftraggebers werden nicht anerkannt, es sei denn, der Fotograf stimmt ihrer Geltung ausdrücklich schriftlich zu.
+                    Abweichende Bedingungen des Auftraggebers werden nicht anerkannt, es sei denn, der Fotograf
+                    stimmt ihrer Geltung ausdrücklich schriftlich zu.
                 </p>
 
                 <h2>§ 2 Vertragsschluss</h2>
                 <p>
-                    Der Vertrag kommt durch schriftliche Auftragsbestätigung des Fotografen oder durch konkludentes Handeln (Durchführung des Auftrags) zustande. Mündliche Zusagen bedürfen der schriftlichen Bestätigung.
+                    Der Vertrag kommt durch schriftliche Auftragsbestätigung des Fotografen oder durch
+                    konkludentes Handeln (Durchführung des Auftrags) zustande. Mündliche Zusagen bedürfen der
+                    schriftlichen Bestätigung.
                 </p>
 
                 <h2>§ 3 Leistungen des Fotografen</h2>
-                
                 <h3>3.1 Fotografische Leistungen</h3>
                 <p>Der Fotograf erbringt folgende Leistungen:</p>
                 <ul>
@@ -299,28 +165,40 @@
                     <li>Übertragung vereinbarter Nutzungsrechte</li>
                 </ul>
 
-                <h3>3.2 Leistungspakete</h3>
+                <h3>3.2 Leistungspakete und Preise</h3>
                 <div class="price-table">
-                    <h4>Aktuelle Preise (Richtwerte)</h4>
+                    <h4>Richtpreise gemäß Startseite</h4>
                     <div class="price-item">
-                        <div class="price-name">Streetportrait — Solo (60-90 Min, 10 finale Bilder)</div>
-                        <div class="price-amount">€199</div>
+                        <div class="price-name">Portrait & Lifestyle — Bildbearbeitung (Postproduktion)</div>
+                        <div class="price-amount">60&nbsp;€ / Stunde</div>
                     </div>
                     <div class="price-item">
-                        <div class="price-name">Event Report (bis 3 Std, 60+ Bilder)</div>
-                        <div class="price-amount">€549</div>
+                        <div class="price-name">Portrait & Lifestyle — Beispiel: 3-Stunden-Shooting inkl. Auswahl & Bearbeitung</div>
+                        <div class="price-amount">≈&nbsp;250&nbsp;€</div>
                     </div>
                     <div class="price-item">
-                        <div class="price-name">Brand / Lookbook (Halbtag, 20-40 Bilder)</div>
-                        <div class="price-amount">ab €890</div>
+                        <div class="price-name">Portrait & Lifestyle — ab 4 Stunden</div>
+                        <div class="price-amount">Paketpreis nach Absprache</div>
+                    </div>
+                    <div class="price-item">
+                        <div class="price-name">Events & Reportagen — kleinere Events (ca. 3–4&nbsp;Std.)</div>
+                        <div class="price-amount">ab&nbsp;300&nbsp;€</div>
+                    </div>
+                    <div class="price-item">
+                        <div class="price-name">Events & Reportagen — Ganztag</div>
+                        <div class="price-amount">Richtwert&nbsp;600–800&nbsp;€</div>
+                    </div>
+                    <div class="price-item">
+                        <div class="price-name">Video & Interview (Add-on, z. B. BTS-Clip/Interview)</div>
+                        <div class="price-amount">auf Anfrage</div>
                     </div>
                 </div>
                 <p>
-                    <em>Alle Preise verstehen sich zzgl. gesetzlicher Mehrwertsteuer. Reisetätigkeit, besondere Locations und erweiterte Nutzungsrechte können zu Preisanpassungen führen.</em>
+                    <em>Leistung: Auswahl und Grundbearbeitung der Bilder; Umfang abhängig von Shooting/Event und Lichtverhältnissen.
+                    Alle Preise verstehen sich zzgl. gesetzlicher Mehrwertsteuer. Reise-/Location-Kosten und erweiterte Nutzungsrechte können Aufpreise auslösen.</em>
                 </p>
 
                 <h2>§ 4 Pflichten des Auftraggebers</h2>
-
                 <h3>4.1 Mitwirkungspflichten</h3>
                 <p>Der Auftraggeber verpflichtet sich:</p>
                 <ul>
@@ -332,121 +210,132 @@
 
                 <h3>4.2 Model Releases und Einverständniserklärungen</h3>
                 <p>
-                    Bei Personenaufnahmen stellt der Auftraggeber sicher, dass alle abgebildeten Personen über die Verwendung der Bilder informiert sind und entsprechende Model Releases vorliegen.
+                    Bei Personenaufnahmen stellt der Auftraggeber sicher, dass alle abgebildeten Personen über die
+                    Verwendung der Bilder informiert sind und entsprechende Model Releases vorliegen.
                 </p>
 
                 <h2>§ 5 Vergütung und Zahlung</h2>
-
                 <h3>5.1 Honorar</h3>
                 <p>
-                    Das Honorar richtet sich nach der getroffenen Vereinbarung. Bei nicht ausdrücklich vereinbarten Leistungen gelten die aktuellen Preise des Fotografen.
+                    Das Honorar richtet sich nach der getroffenen Vereinbarung. Soweit nicht anders angegeben, gelten die
+                    in § 3.2 ausgewiesenen Richtpreise als Kalkulationsbasis.
                 </p>
 
                 <h3>5.2 Zahlungsbedingungen</h3>
                 <ul>
-                    <li>50% Anzahlung bei Auftragsbestätigung</li>
+                    <li>50 % Anzahlung bei Auftragsbestätigung</li>
                     <li>Restbetrag binnen 14 Tagen nach Lieferung der Bilder</li>
-                    <li>Bei Zahlungsverzug werden Zinsen in Höhe von 9% über dem Basiszinssatz berechnet</li>
+                    <li>Bei Zahlungsverzug werden Zinsen in Höhe von 9 % über dem Basiszinssatz berechnet</li>
                 </ul>
 
                 <h3>5.3 Zusatzkosten</h3>
                 <p>
-                    Fahrtkosten, Übernachtungskosten, Verpflegung und sonstige Spesen werden gesondert berechnet. Equipment-Miete und besondere technische Anforderungen werden nach Aufwand abgerechnet.
+                    Fahrt-, Übernachtungs- und Location-Kosten sowie Equipment-Mieten und besondere technische Anforderungen
+                    werden gesondert berechnet. Postproduktion über den vereinbarten Rahmen hinaus wird mit 60 €/h abgerechnet.
                 </p>
 
                 <h2>§ 6 Urheberrecht und Nutzungsrechte</h2>
-
                 <h3>6.1 Urheberrecht</h3>
                 <p>
-                    Der Fotograf behält das uneingeschränkte Urheberrecht an allen erstellten Lichtbildern. Die Bilder dürfen nur im Rahmen der eingeräumten Nutzungsrechte verwendet werden.
+                    Der Fotograf behält das uneingeschränkte Urheberrecht an allen erstellten Lichtbildern. Die
+                    Bilder dürfen nur im Rahmen der eingeräumten Nutzungsrechte verwendet werden.
                 </p>
 
                 <h3>6.2 Eingeräumte Nutzungsrechte</h3>
-                <p>
-                    Standardmäßig werden folgende Nutzungsrechte eingeräumt:
-                </p>
+                <p>Standardmäßig werden folgende Nutzungsrechte eingeräumt:</p>
                 <ul>
-                    <li><strong>Streetportrait:</strong> Einfache Nutzungsrechte für Social Media, Bewerbungen und private Zwecke</li>
-                    <li><strong>Event:</strong> Einfache Nutzungsrechte für Marketing und Dokumentation des Events</li>
-                    <li><strong>Brand/Lookbook:</strong> Kommerzielle Nutzungsrechte nach separater Vereinbarung</li>
+                    <li><strong>Portrait & Lifestyle:</strong> einfache Nutzungsrechte für Social Media, Bewerbungen und private Zwecke</li>
+                    <li><strong>Event & Reportage:</strong> einfache Nutzungsrechte für Marketing und Dokumentation des Events</li>
+                    <li><strong>Brand/Lookbook:</strong> kommerzielle Nutzungsrechte nach separater Vereinbarung</li>
                 </ul>
 
                 <h3>6.3 Erweiterte Nutzungsrechte</h3>
                 <p>
-                    Erweiterte oder ausschließliche Nutzungsrechte können gegen Aufpreis erworben werden. Die Übertragung bedarf der schriftlichen Vereinbarung.
+                    Erweiterte oder ausschließliche Nutzungsrechte können gegen Aufpreis erworben werden. Die
+                    Übertragung bedarf der schriftlichen Vereinbarung.
                 </p>
 
                 <h3>6.4 Urheberbenennung</h3>
                 <p>
-                    Bei jeder Veröffentlichung ist der Fotograf als „© 27awkward photoz" zu nennen, soweit technisch möglich und branchenüblich.
+                    Bei jeder Veröffentlichung ist der Fotograf als „© 27awkward photoz“ zu nennen, soweit technisch
+                    möglich und branchenüblich.
                 </p>
 
                 <h2>§ 7 Leistungszeit und Termine</h2>
-
                 <h3>7.1 Shooting-Termine</h3>
                 <p>
-                    Termine werden nach Verfügbarkeit vereinbart. Verschiebungen sind bis 48 Stunden vor dem Termin kostenfrei möglich.
+                    Termine werden nach Verfügbarkeit vereinbart. Verschiebungen sind bis 48 Stunden vor dem Termin
+                    kostenfrei möglich.
                 </p>
 
                 <h3>7.2 Lieferfristen</h3>
                 <p>
-                    Die bearbeiteten Bilder werden in der Regel binnen 7-14 Werktagen nach dem Shooting geliefert. Bei größeren Projekten können längere Bearbeitungszeiten vereinbart werden.
+                    Die bearbeiteten Bilder werden in der Regel binnen 7–14 Werktagen nach dem Shooting geliefert. Bei
+                    größeren Projekten können längere Bearbeitungszeiten vereinbart werden.
                 </p>
 
                 <h3>7.3 Wetterbedingte Verschiebungen</h3>
                 <p>
-                    Bei Outdoor-Shootings können wetterbedingte Verschiebungen notwendig werden. In diesem Fall werden kostenfreie Ersatztermine angeboten.
+                    Bei Outdoor-Shootings können wetterbedingte Verschiebungen notwendig werden. In diesem Fall werden
+                    kostenfreie Ersatztermine angeboten.
                 </p>
 
                 <h2>§ 8 Stornierung und Rücktritt</h2>
-
                 <h3>8.1 Stornierung durch den Auftraggeber</h3>
                 <ul>
-                    <li>Bis 7 Tage vor Termin: 25% des Honorars</li>
-                    <li>Bis 48 Stunden vor Termin: 50% des Honorars</li>
-                    <li>Weniger als 48 Stunden: 100% des Honorars</li>
+                    <li>Bis 7 Tage vor Termin: 25 % des Honorars</li>
+                    <li>Bis 48 Stunden vor Termin: 50 % des Honorars</li>
+                    <li>Weniger als 48 Stunden: 100 % des Honorars</li>
                 </ul>
 
                 <h3>8.2 Rücktritt durch den Fotografen</h3>
                 <p>
-                    Der Fotograf kann bei wichtigem Grund (Krankheit, höhere Gewalt) vom Vertrag zurücktreten. Bereits geleistete Zahlungen werden vollständig erstattet.
+                    Der Fotograf kann bei wichtigem Grund (Krankheit, höhere Gewalt) vom Vertrag zurücktreten. Bereits
+                    geleistete Zahlungen werden vollständig erstattet.
                 </p>
 
                 <h2>§ 9 Gewährleistung und Haftung</h2>
-
                 <h3>9.1 Mängel</h3>
                 <p>
-                    Der Fotograf gewährleistet eine technisch und künstlerisch einwandfreie Ausführung nach anerkannten Regeln der Fototechnik. Bei berechtigten Mängelrügen erfolgt Nachbesserung oder Ersatzlieferung.
+                    Der Fotograf gewährleistet eine technisch und künstlerisch einwandfreie Ausführung nach anerkannten
+                    Regeln der Fototechnik. Bei berechtigten Mängelrügen erfolgt Nachbesserung oder Ersatzlieferung.
                 </p>
 
                 <h3>9.2 Haftungsbeschränkung</h3>
                 <p>
-                    Die Haftung des Fotografen ist auf den Auftragswert begrenzt. Für mittelbare Schäden, entgangenen Gewinn und Folgeschäden wird nicht gehaftet, außer bei Vorsatz oder grober Fahrlässigkeit.
+                    Die Haftung des Fotografen ist auf den Auftragswert begrenzt. Für mittelbare Schäden, entgangenen
+                    Gewinn und Folgeschäden wird nicht gehaftet, außer bei Vorsatz oder grober Fahrlässigkeit.
                 </p>
 
                 <h3>9.3 Datenverlust</h3>
                 <p>
-                    Der Fotograf verpflichtet sich zur sorgfältigen Datensicherung, haftet jedoch nicht für Datenverlust durch technische Defekte oder höhere Gewalt.
+                    Der Fotograf verpflichtet sich zur sorgfältigen Datensicherung, haftet jedoch nicht für Datenverlust
+                    durch technische Defekte oder höhere Gewalt.
                 </p>
 
                 <h2>§ 10 Eigentumsvorbehalt</h2>
                 <p>
-                    Die gelieferten Bilder bleiben bis zur vollständigen Bezahlung Eigentum des Fotografen. Bei Zahlungsverzug können die Nutzungsrechte widerrufen werden.
+                    Die gelieferten Bilder bleiben bis zur vollständigen Bezahlung Eigentum des Fotografen. Bei
+                    Zahlungsverzug können die Nutzungsrechte widerrufen werden.
                 </p>
 
                 <h2>§ 11 Rechtswahl und Gerichtsstand</h2>
                 <p>
-                    Es gilt deutsches Recht. Gerichtsstand ist [Ihr Gerichtsstand], sofern der Auftraggeber Kaufmann, juristische Person des öffentlichen Rechts oder öffentlich-rechtliches Sondervermögen ist.
+                    Es gilt deutsches Recht. Gerichtsstand ist Berlin, sofern der Auftraggeber Kaufmann, juristische
+                    Person des öffentlichen Rechts oder öffentlich-rechtliches Sondervermögen ist.
                 </p>
 
                 <h2>§ 12 Salvatorische Klausel</h2>
                 <p>
-                    Sollten einzelne Bestimmungen dieses Vertrags unwirksam sein, bleibt die Wirksamkeit des übrigen Vertrags unberührt. Die unwirksame Bestimmung ist durch eine wirksame zu ersetzen, die dem wirtschaftlichen Zweck der unwirksamen Bestimmung am nächsten kommt.
+                    Sollten einzelne Bestimmungen dieses Vertrags unwirksam sein, bleibt die Wirksamkeit des übrigen
+                    Vertrags unberührt. Die unwirksame Bestimmung ist durch eine wirksame zu ersetzen, die dem
+                    wirtschaftlichen Zweck der unwirksamen Bestimmung am nächsten kommt.
                 </p>
 
                 <h2>§ 13 Portfolio und Referenzen</h2>
                 <p>
-                    Der Fotograf ist berechtigt, die erstellten Bilder für eigene Werbezwecke, Portfolio und Referenzen zu verwenden, soweit keine besonderen Vertraulichkeitsvereinbarungen getroffen wurden.
+                    Der Fotograf ist berechtigt, die erstellten Bilder für eigene Werbezwecke, Portfolio und Referenzen
+                    zu verwenden, soweit keine besonderen Vertraulichkeitsvereinbarungen getroffen wurden.
                 </p>
 
                 <p><strong>Stand:</strong> <span id="date"></span></p>
