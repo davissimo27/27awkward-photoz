@@ -642,16 +642,55 @@
             transition: transform 0.3s ease;
         }
         
-        /* Lightbox optimizations for different image sizes */
+        /* ===== LIGHTBOX OPTIMIZATIONS ===== */
         .lightbox-image {
-            max-width: 95vw;
-            max-height: 95vh;
+            /* Base styles for all devices */
             object-fit: contain;
             border-radius: 8px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
             animation: lightboxZoomIn 0.3s ease-out;
             transition: transform 0.3s ease, opacity 0.3s ease;
             touch-action: manipulation;
+            
+            /* Desktop default sizing */
+            max-width: 85vw;
+            max-height: 85vh;
+            width: auto;
+            height: auto;
+        }
+        
+        /* Desktop-specific optimizations */
+        @media (min-width: 769px) {
+            .lightbox-image {
+                max-width: 80vw;
+                max-height: 80vh;
+            }
+            
+            /* Handle very wide images (landscape) */
+            .lightbox-image[data-orientation="landscape"] {
+                max-width: 90vw;
+                max-height: 60vh;
+            }
+            
+            /* Handle very tall images (portrait) */
+            .lightbox-image[data-orientation="portrait"] {
+                max-width: 50vw;
+                max-height: 85vh;
+            }
+            
+            /* Handle square images */
+            .lightbox-image[data-orientation="square"] {
+                max-width: 70vw;
+                max-height: 70vh;
+            }
+        }
+        
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .lightbox-image {
+                max-width: 95vw;
+                max-height: 80vh;
+            }
         }
         
         .gallery-item.main-image {
@@ -2039,7 +2078,7 @@
                     <div class="card scroll-animate">
                         <h4>Portrait- & Lifestyle-Shootings</h4>
                         <p class="muted">Egal ob private Portraits, Streetstyle oder Editorial — jedes Shooting läuft individuell, aber mit einem klaren Ziel: authentische Bilder, die wirken.</p>
-                        <div class="price">60€</div>
+                        <div class="price">70€</div>
                         <p class="muted"><strong>pro Stunde</strong> Shooting (pauschal)</p>
                         <div class="price" style="font-size:20px;margin-top:12px">40€/h</div>
                         <p class="muted"><strong>Bildbearbeitung</strong><br><span style="font-size:12px;">Genauer Preis wird individuell je nach Aufwand vereinbart</span></p>
@@ -2883,6 +2922,23 @@
             const currentImg = currentLightboxImages[currentLightboxIndex];
             img.src = currentImg.src;
             img.alt = currentImg.alt;
+            
+            // Set orientation for CSS styling when image loads
+            img.onload = function() {
+                const aspectRatio = this.naturalWidth / this.naturalHeight;
+                
+                // Set data-orientation for CSS targeting
+                if (aspectRatio > 1.2) {
+                    this.setAttribute('data-orientation', 'landscape');
+                } else if (aspectRatio < 0.8) {
+                    this.setAttribute('data-orientation', 'portrait');
+                } else {
+                    this.setAttribute('data-orientation', 'square');
+                }
+                
+                // Console log for debugging
+                console.log(`Lightbox image: ${this.naturalWidth}x${this.naturalHeight}, ratio: ${aspectRatio.toFixed(2)}, orientation: ${this.getAttribute('data-orientation')}`);
+            };
             
             if (counter) {
                 counter.textContent = `${currentLightboxIndex + 1} / ${currentLightboxImages.length}`;
