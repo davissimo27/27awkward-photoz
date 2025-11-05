@@ -1987,7 +1987,7 @@
                     <div class="card scroll-animate">
                         <h4>Portrait- & Lifestyle-Shootings</h4>
                         <p class="muted">Egal ob private Portraits, Streetstyle oder Editorial — jedes Shooting läuft individuell, aber mit einem klaren Ziel: authentische Bilder, die wirken.</p>
-                        <div class="price">70€</div>
+                        <div class="price">60€</div>
                         <p class="muted"><strong>pro Stunde</strong> Shooting (pauschal)</p>
                         <div class="price" style="font-size:20px;margin-top:12px">40€/h</div>
                         <p class="muted"><strong>Bildbearbeitung</strong><br><span style="font-size:12px;">Genauer Preis wird individuell je nach Aufwand vereinbart</span></p>
@@ -2075,17 +2075,7 @@
                         </div>
                         <a href="https://www.fotocommunity.de/fotograf/27awkwardphotoz/2518777" target="_blank" rel="noopener" aria-label="fotocommunity Main" class="btn">Öffnen</a>
                     </div>
-                    <div class="social">
-                        <div style="display:flex;align-items:center;gap:10px">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                        </svg>
-                        <strong>LinkedIn</strong>
-                        </div>
-                        <a href="https://www.linkedin.com/in/awkward-photoz-7b3250350/" target="_blank" rel="noopener" aria-label="LinkedIn" class="btn">Öffnen</a>
-                    	</div>
-                	</div>
-                 </div>
+                </div>
             </div>
         </section>
 
@@ -2633,29 +2623,72 @@
             // Generate sample images for the category
             const images = generateCategoryImages(category);
             
-            // Create gallery items
+            // Create gallery items with better error handling
             images.forEach((img, index) => {
                 const item = document.createElement('div');
                 item.className = 'gallery-item';
                 if (index === 0) item.classList.add('main-image');
                 
                 const imgElement = document.createElement('img');
-                imgElement.src = img.src;
+                imgElement.loading = 'lazy'; // Lazy load gallery images
                 imgElement.alt = img.alt;
-                imgElement.loading = 'lazy';
                 
+                // Better error handling for missing images
+                imgElement.onerror = function() {
+                    console.warn(`Image not found: ${img.src}, trying fallback`);
+                    if (this.src !== img.fallback) {
+                        this.src = img.fallback;
+                    } else {
+                        // Hide item if even fallback fails
+                        item.style.display = 'none';
+                        console.warn(`Fallback also failed for ${img.src}`);
+                    }
+                };
+                
+                imgElement.onload = function() {
+                    item.style.opacity = '1';
+                };
+                
+                // Start with low opacity for loading effect
+                item.style.opacity = '0.3';
+                item.style.transition = 'opacity 0.3s ease';
+                
+                imgElement.src = img.src;
                 item.appendChild(imgElement);
                 grid.appendChild(item);
                 
-                // Add click handler for lightbox
+                // Add click handler for lightbox (with throttling for mobile)
+                let clickTimeout;
                 item.addEventListener('click', () => {
-                    openLightbox(images, index);
+                    if (clickTimeout) return; // Prevent double-clicks
+                    clickTimeout = setTimeout(() => {
+                        clickTimeout = null;
+                        openLightbox(images, index);
+                    }, 100);
                 });
             });
             
-            // Show modal
+            // Show modal with mobile optimizations
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
+            
+            // Mobile optimization: prevent scroll issues and memory problems
+            if (window.innerWidth <= 768) {
+                modal.style.position = 'fixed';
+                modal.style.top = '0';
+                modal.style.left = '0';
+                modal.style.right = '0';
+                modal.style.bottom = '0';
+                modal.style.zIndex = '1000';
+                
+                // Reduce image quality on mobile to prevent memory issues
+                const mobileImages = grid.querySelectorAll('img');
+                mobileImages.forEach(img => {
+                    img.style.maxWidth = '100%';
+                    img.style.height = 'auto';
+                    img.style.objectFit = 'cover';
+                });
+            }
         }
 
         function getCategoryTitle(category) {
@@ -2674,12 +2707,13 @@
         }
 
         function generateCategoryImages(category) {
-            // Generate sample images for each category
+            // Generate all 9 images as intended
             const baseImages = [];
             for (let i = 1; i <= 9; i++) {
                 baseImages.push({
                     src: `./images/${category}/${i}.webp`,
-                    alt: `${category} image ${i}`
+                    alt: `${category} image ${i}`,
+                    fallback: `./images/${category}/main.webp` // Fallback to main image
                 });
             }
             return baseImages;
@@ -2729,6 +2763,16 @@
             showLightboxImage();
             lightbox.classList.add('active');
             document.body.style.overflow = 'hidden';
+            
+            // Mobile-specific optimizations (but keep all 9 images)
+            if (window.innerWidth <= 768) {
+                const img = document.getElementById('lightboxImage');
+                if (img) {
+                    img.style.maxHeight = '80vh';
+                    img.style.maxWidth = '90vw';
+                    img.style.objectFit = 'contain';
+                }
+            }
         }
 
         function showLightboxImage() {
