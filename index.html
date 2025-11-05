@@ -1984,17 +1984,17 @@
                 <h3 class="section-title scroll-animate">Preise & Leistungen</h3>
                 <p class="section-sub scroll-animate">Ich mag's transparent. Deshalb gibt es hier klare Richtwerte, damit du weißt, womit du rechnen kannst. Jedes Projekt ist anders — am Ende zählt das Ergebnis, nicht die Stoppuhr.</p>
                 <div class="grid">
-<div class="card scroll-animate">
-    <h4>Portrait- & Lifestyle-Shootings</h4>
-    <p class="muted">Egal ob private Portraits, Streetstyle oder Editorial — jedes Shooting läuft individuell, aber mit einem klaren Ziel: authentische Bilder, die wirken.</p>
-    <div class="price">70€</div>
-    <p class="muted"><strong>pro Stunde</strong> Shooting (pauschal)</p>
-    <div class="price" style="font-size:20px;margin-top:12px">40€/h</div>
-    <p class="muted"><strong>Bildbearbeitung</strong><br><span style="font-size:12px;">Genauer Preis wird individuell je nach Aufwand vereinbart</span></p>
-    <p class="helper" style="margin-top:12px"><strong>Beispiel:</strong><br>Ein 3-Stunden-Shooting inkl. Auswahl und Bearbeitung der Bilder liegt bei etwa 250€</p>
-    <p class="helper">Ab vier Stunden kann man über einen Paketpreis sprechen.</p>
-    <a href="#kontakt" class="btn primary">Anfrage stellen</a>
-</div>
+                    <div class="card scroll-animate">
+                        <h4>Portrait- & Lifestyle-Shootings</h4>
+                        <p class="muted">Egal ob private Portraits, Streetstyle oder Editorial — jedes Shooting läuft individuell, aber mit einem klaren Ziel: authentische Bilder, die wirken.</p>
+                        <div class="price">70€</div>
+                        <p class="muted"><strong>pro Stunde</strong> Shooting (pauschal)</p>
+                        <div class="price" style="font-size:20px;margin-top:12px">40€/h</div>
+                        <p class="muted"><strong>Bildbearbeitung</strong><br><span style="font-size:12px;">Genauer Preis wird individuell je nach Aufwand vereinbart</span></p>
+                        <p class="helper" style="margin-top:12px"><strong>Beispiel:</strong><br>Ein 3-Stunden-Shooting inkl. Auswahl und Bearbeitung der Bilder liegt bei etwa 250€</p>
+                        <p class="helper">Ab vier Stunden kann man über einen Paketpreis sprechen.</p>
+                        <a href="#kontakt" class="btn primary">Anfrage stellen</a>
+                    </div>
                     <div class="card scroll-animate">
                         <h4>Events & Reportagen</h4>
                         <p class="muted">Ob Festival, Messe oder Clubnacht — ich begleite das Geschehen dokumentarisch und halte die wichtigsten Momente fest. Authentizität und Stimmung pur.</p>
@@ -2083,8 +2083,8 @@
                         <strong>LinkedIn</strong>
                         </div>
                         <a href="https://www.linkedin.com/in/awkward-photoz-7b3250350/" target="_blank" rel="noopener" aria-label="LinkedIn" class="btn">Öffnen</a>
-                    </div>
-                </div>
+                    	</div>
+                	</div>
                  </div>
             </div>
         </section>
@@ -2164,8 +2164,7 @@
     <script>
         // ===== BREVO INTEGRATION CONSTANTS =====
         // TODO: Ersetze diese URL durch deine tatsächliche Google Apps Script Web App URL
-        const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx3ctJipyjxc37xMPhmERCPt8EkvlEm28dw7xJVLar6TtUxlL5sUopo6788ey1PB6x5/exec';
-        
+        const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
         
         // Jahreszahl automatisch aktualisieren
         document.getElementById('year').textContent = new Date().getFullYear();
@@ -2542,6 +2541,10 @@
                 
                 // Initialize cookie banner
                 initializeCookieBanner();
+                
+                // Initialize gallery and lightbox
+                setupGalleryModal();
+                setupLightbox();
 
                 // Initialize scroll animations
                 const animateElements = document.querySelectorAll('.scroll-animate, .scroll-animate-left, .scroll-animate-right');
@@ -2599,21 +2602,223 @@
             });
         });
 
-        // ===== GALLERY SYSTEM (Simplified for this integration) =====
-        // Portfolio tiles click handler for future gallery implementation
+        // ===== GALLERY SYSTEM =====
+        // Portfolio tiles click handler
         document.addEventListener('click', (e) => {
             try {
                 const categoryTile = e.target.closest('.category-tile');
                 if (categoryTile) {
                     e.preventDefault();
                     const category = categoryTile.dataset.category;
-                    console.log('Gallery would open for category:', category);
-                    // Future: Implement gallery modal here
+                    openGalleryModal(category);
                 }
             } catch (error) {
                 console.warn('Error in category tile click:', error);
             }
         });
+
+        function openGalleryModal(category) {
+            const modal = document.getElementById('galleryModal');
+            const title = document.getElementById('galleryTitle');
+            const grid = document.getElementById('galleryGrid');
+            
+            if (!modal || !title || !grid) return;
+            
+            // Set title
+            title.textContent = getCategoryTitle(category);
+            
+            // Clear existing content
+            grid.innerHTML = '';
+            
+            // Generate sample images for the category
+            const images = generateCategoryImages(category);
+            
+            // Create gallery items
+            images.forEach((img, index) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                if (index === 0) item.classList.add('main-image');
+                
+                const imgElement = document.createElement('img');
+                imgElement.src = img.src;
+                imgElement.alt = img.alt;
+                imgElement.loading = 'lazy';
+                
+                item.appendChild(imgElement);
+                grid.appendChild(item);
+                
+                // Add click handler for lightbox
+                item.addEventListener('click', () => {
+                    openLightbox(images, index);
+                });
+            });
+            
+            // Show modal
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function getCategoryTitle(category) {
+            const titles = {
+                'streetphotography': 'Streetphotography',
+                'city-photography': 'City Photography', 
+                'landscape': 'Landscape Photography',
+                'graffiti': 'Graffiti',
+                'ai-portraits': 'AI Portraits',
+                'portraits': 'Portraits',
+                'event-photography': 'Event Photography',
+                'comic-art': 'Comic Art',
+                'person-behind': 'The person behind the movement'
+            };
+            return titles[category] || 'Portfolio';
+        }
+
+        function generateCategoryImages(category) {
+            // Generate sample images for each category
+            const baseImages = [];
+            for (let i = 1; i <= 9; i++) {
+                baseImages.push({
+                    src: `./images/${category}/${i}.webp`,
+                    alt: `${category} image ${i}`
+                });
+            }
+            return baseImages;
+        }
+
+        // Gallery modal close handlers
+        function setupGalleryModal() {
+            const modal = document.getElementById('galleryModal');
+            const closeBtn = document.getElementById('galleryClose');
+            const backdrop = document.getElementById('galleryBackdrop');
+            
+            if (closeBtn) {
+                closeBtn.addEventListener('click', closeGalleryModal);
+            }
+            
+            if (backdrop) {
+                backdrop.addEventListener('click', closeGalleryModal);
+            }
+            
+            // ESC key to close
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal?.classList.contains('active')) {
+                    closeGalleryModal();
+                }
+            });
+        }
+
+        function closeGalleryModal() {
+            const modal = document.getElementById('galleryModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // ===== LIGHTBOX SYSTEM =====
+        let currentLightboxImages = [];
+        let currentLightboxIndex = 0;
+
+        function openLightbox(images, startIndex = 0) {
+            currentLightboxImages = images;
+            currentLightboxIndex = startIndex;
+            
+            const lightbox = document.getElementById('lightbox');
+            if (!lightbox) return;
+            
+            showLightboxImage();
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function showLightboxImage() {
+            const img = document.getElementById('lightboxImage');
+            const counter = document.getElementById('lightboxCounter');
+            const title = document.getElementById('lightboxTitle');
+            const prevBtn = document.getElementById('lightboxPrev');
+            const nextBtn = document.getElementById('lightboxNext');
+            
+            if (!img || !currentLightboxImages.length) return;
+            
+            const currentImg = currentLightboxImages[currentLightboxIndex];
+            img.src = currentImg.src;
+            img.alt = currentImg.alt;
+            
+            if (counter) {
+                counter.textContent = `${currentLightboxIndex + 1} / ${currentLightboxImages.length}`;
+            }
+            
+            if (title) {
+                title.textContent = currentImg.alt;
+            }
+            
+            // Update navigation buttons
+            if (prevBtn) {
+                prevBtn.classList.toggle('disabled', currentLightboxIndex === 0);
+            }
+            if (nextBtn) {
+                nextBtn.classList.toggle('disabled', currentLightboxIndex === currentLightboxImages.length - 1);
+            }
+        }
+
+        function navigateLightbox(direction) {
+            const newIndex = currentLightboxIndex + direction;
+            if (newIndex >= 0 && newIndex < currentLightboxImages.length) {
+                currentLightboxIndex = newIndex;
+                showLightboxImage();
+            }
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            if (lightbox) {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        function setupLightbox() {
+            const closeBtn = document.getElementById('lightboxClose');
+            const prevBtn = document.getElementById('lightboxPrev');
+            const nextBtn = document.getElementById('lightboxNext');
+            const lightbox = document.getElementById('lightbox');
+            
+            if (closeBtn) {
+                closeBtn.addEventListener('click', closeLightbox);
+            }
+            
+            if (prevBtn) {
+                prevBtn.addEventListener('click', () => navigateLightbox(-1));
+            }
+            
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => navigateLightbox(1));
+            }
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (!lightbox?.classList.contains('active')) return;
+                
+                switch(e.key) {
+                    case 'Escape':
+                        closeLightbox();
+                        break;
+                    case 'ArrowLeft':
+                        navigateLightbox(-1);
+                        break;
+                    case 'ArrowRight':
+                        navigateLightbox(1);
+                        break;
+                }
+            });
+            
+            // Click outside to close
+            lightbox?.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+        }
 
         // ===== LANGUAGE TABS WITH SMOOTH TRANSITIONS =====
         const langTabs = document.querySelectorAll('.lang-tab');
